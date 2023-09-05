@@ -1,95 +1,95 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+'use client'
+
+import { useEffect, useState } from 'react'
+import { Hiragana } from './texts/Hiragana'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { Katakana } from './texts/Katakana'
+
+const KanaArray = Hiragana.concat(Katakana);
 
 export default function Home() {
+
+  const [tracker, setTracker] = useState(new Set());
+  const [selectedCharacter, setSelectedCharacter] = useState(null);
+  const [inputValue, setInputValue] = useState('');
+  const [isCorrect, setIsCorrect] = useState(false);
+
+  useEffect(() => {
+    generateUniqueCharacter();
+  }, [])
+
+  function generateCharacter() {
+    return Math.floor(Math.random() * KanaArray.length);
+  }
+
+  function generateUniqueCharacter() {
+    let randomCharacterNum;
+
+    do {
+      randomCharacterNum = generateCharacter();
+      console.log(randomCharacterNum)
+    } while (tracker.has(randomCharacterNum));
+
+    setSelectedCharacter(randomCharacterNum);
+    setTracker(prev => prev.add(randomCharacterNum));
+  }
+
+  // ------------------------- FUNCTIONS --------------------------------------------------
+
+  useEffect(() => {
+
+    console.log(tracker)
+
+  }, [tracker])
+
+  const handleInputChange = (e) => {
+    
+    if (tracker.size == KanaArray.length) {
+      return
+    }    
+    const value = e.target.value;
+
+    if (value && value.toLowerCase() === KanaArray[selectedCharacter][1].toLowerCase()) {
+      generateUniqueCharacter();
+      setInputValue('')
+      setIsCorrect(true);
+      return;
+    }
+    setInputValue(value);
+    setIsCorrect(false);
+  }
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+    <div className='vh-100 vw-100'>
+      <div className='d-flex flex-row h-100'>
+        <div className='col-4 flex-fill d-flex ps-5 pt-5'>
+          <h1>
+            {tracker.size} / {KanaArray.length}
+          </h1>
+        </div>
+        <div className='col-4 flex-fill d-flex flex-column justify-content-center align-items-center'>
+          <span className='fw-bold text-center' style={{ fontSize: '15em' }}>
+            {selectedCharacter != null ? KanaArray[selectedCharacter][0] : '. . .'}
+          </span>
+          <input
+            className='p-3 text-center my-5 w-75'
+            style={{ fontSize: '2em' }}
+            onChange={handleInputChange}
+            value={inputValue}            
           >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+
+          </input>
+        </div>
+        <div className='col-4 flex-fill justify-content-center d-flex align-items-center'>
+
+          {
+            isCorrect
+            ? <h1 className='text-center text-success' style={{ fontSize: '5em' }}>CORRECT</h1>
+            : <h1 className='text-center text-danger' style={{ fontSize: '5em' }}>WRONG</h1>
+          }          
         </div>
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </div>
   )
 }
