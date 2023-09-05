@@ -26,21 +26,14 @@ export default function Home() {
     let randomCharacterNum;
 
     do {
-      randomCharacterNum = generateCharacter();
-      console.log(randomCharacterNum)
+      randomCharacterNum = generateCharacter();      
     } while (tracker.has(randomCharacterNum));
 
     setSelectedCharacter(randomCharacterNum);
     setTracker(prev => prev.add(randomCharacterNum));
   }
 
-  // ------------------------- FUNCTIONS --------------------------------------------------
-
-  useEffect(() => {
-
-    console.log(tracker)
-
-  }, [tracker])
+  // ------------------------- HANDLE FUNCTIONS --------------------------------------------------  
 
   const handleInputChange = (e) => {
     
