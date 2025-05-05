@@ -26,7 +26,7 @@ export const HirakanaBasic = ({
                     </div>
                     {/* TEXT */}
                     <div className='col flex-fill d-flex justify-content-center'>
-                        <span className='fw-bold text-center' style={{ fontSize: '12em' }}>
+                        <span className='fw-bold text-center' style={{ fontSize: '11em' }}>
                             {selectedCharacter != null ? hirakanaArray[selectedCharacter][0] : '. . .'}
                         </span>
                     </div>
