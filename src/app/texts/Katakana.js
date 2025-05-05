@@ -43,5 +43,5 @@ export const Katakana = [
     ['ミ', 'mi'],
     ['ノ', 'no'],
     ['ト', 'to'],
-    ['ム', 'mu']
+    ['ム', 'mu'],
 ];

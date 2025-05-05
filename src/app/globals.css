@@ -1,0 +1,28 @@
+/* ---------------------------- HEADER ---------------------------- */
+
+.main-header-ad-banner {
+    /* Default for mobile */
+    height: 60px;
+    min-height: 60px;
+    max-height: 60px;
+}
+
+@media (min-width: 768px) {
+
+    /* Tablet and up */
+    .main-header-ad-banner {
+        height: 90px;
+        min-height: 90px;
+        max-height: 90px;
+    }
+}
+
+@media (min-width: 1024px) {
+
+    /* Desktop */
+    .main-header-ad-banner {
+        height: 120px;
+        min-height: 120px;
+        max-height: 120px;
+    }
+}

@@ -45,5 +45,5 @@ export const Hiragana = [
     ['ん', 'n'],
     ['ほ', 'ho'],
     ['と', 'to'],
-    ['き', 'ki']
+    ['き', 'ki'],
 ];
