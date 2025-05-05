@@ -19,7 +19,7 @@ export const HirakanaBasic = ({
                 </div>
                 <div className='col d-flex flex-column'>
                     {/* SCORE */}
-                    <div className='col flex-fill d-flex justify-content-center pt-5'>
+                    <div className='col flex-fill d-flex justify-content-center pt-4'>
                         <h1 className='m-0'>
                             {tracker.size < 1 ? 1 : tracker.size} / {hirakanaArray.length}
                         </h1>
@@ -31,7 +31,7 @@ export const HirakanaBasic = ({
                         </span>
                     </div>
                     {/* INPUT */}
-                    <div className='col flex-fill d-flex justify-content-center px-4'>
+                    <div className='col flex-fill d-flex justify-content-center px-4 pb-4'>
                         <input
                             className='w-100'
                             type="text"
