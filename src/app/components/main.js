@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react'
 import { HirakanaBasic } from './Tabs/Hirakana-Basic'
 import { Hiragana } from '../texts/Hiragana'
 import { Katakana } from '../texts/Katakana'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import DangerousIcon from '@mui/icons-material/Dangerous';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -14,7 +16,8 @@ const hirakanaArray = Hiragana.concat(Katakana);
 
 export const MainContent = () => {
 
-    const [tracker, setTracker] = useState(new Set());
+    const [trackerCounter, setTrackerCounter] = useState(new Set());
+    const [trackerTableRows, setTrackerTableRows] = useState([]);
     const [selectedCharacter, setSelectedCharacter] = useState(null);
     const [inputValue, setInputValue] = useState('');
     const [isCorrect, setIsCorrect] = useState(null);
@@ -24,19 +27,14 @@ export const MainContent = () => {
         generateUniqueCharacter();
     }, [])
 
-    useEffect(() => {
+    function displayInputBorderFadeOutTimer() {
+        setValueDisplayInputBorder(true);
+        const timeout = setTimeout(() => {
+            setValueDisplayInputBorder(false);
+        }, 1500);
 
-        if (isCorrect != null) {
-
-            setValueDisplayInputBorder(true);
-            const timeout = setTimeout(() => {
-                setValueDisplayInputBorder(false);
-            }, 1500);
-
-            return () => clearTimeout(timeout);
-        }
-    }, [isCorrect, inputValue]);
-
+        return () => clearTimeout(timeout);
+    }
 
     function generateCharacter() {
         return Math.floor(Math.random() * hirakanaArray.length);
@@ -47,29 +45,55 @@ export const MainContent = () => {
 
         do {
             randomCharacterNum = generateCharacter();
-        } while (tracker.has(randomCharacterNum));
+        } while (trackerCounter.has(randomCharacterNum));
 
         setSelectedCharacter(randomCharacterNum);
-        setTracker(prev => prev.add(randomCharacterNum));
+        setTrackerCounter(prev => prev.add(randomCharacterNum));
     }
 
     // ------------------------- HANDLE FUNCTIONS --------------------------------------------------  
 
     const handleInputChange = (e) => {
 
-        if (tracker.size == hirakanaArray.length) {
+        if (trackerCounter.size == hirakanaArray.length) {
             return
         }
-        const value = e.target.value;
+        setInputValue(e.target.value);
+    }
 
-        if (value && value.toLowerCase() === hirakanaArray[selectedCharacter][1].toLowerCase()) {
-            generateUniqueCharacter();
-            setInputValue('')
-            setIsCorrect(true);
-            return;
+    const handleOnEnter = () => {
+
+        if (trackerCounter.size == hirakanaArray.length) {
+            return
         }
-        setInputValue(value);
-        setIsCorrect(() => false);
+
+        const character = hirakanaArray[selectedCharacter];
+        const value = inputValue;
+        let isCorrect = false;
+
+        // EASY MODE, DOESN'T GO NEXT WHEN WRONG
+
+        // if (value && value.toLowerCase() === hirakanaArray[selectedCharacter][1].toLowerCase()) {
+        //     generateUniqueCharacter();
+        //     setInputValue('')
+        //     displayInputBorderFadeOutTimer(true)
+        //     setIsCorrect(true);
+        //     return;
+        // }
+
+        // displayInputBorderFadeOutTimer(false)
+        // setIsCorrect(() => false);
+
+        if (value && value.toLowerCase() === character[1].toLowerCase()) {
+            isCorrect = true;
+        }
+
+        setInputValue('')
+        generateUniqueCharacter();
+        displayInputBorderFadeOutTimer();
+        setIsCorrect(() => isCorrect);
+
+        setTrackerTableRows([createData(isCorrect, character[0], character[1]), ...trackerTableRows])
     }
 
     return (
@@ -89,12 +113,14 @@ export const MainContent = () => {
                 <div className="col d-flex">
                     <BasicTabs
                         hirakanaArray={hirakanaArray}
-                        tracker={tracker}
+                        tracker={trackerCounter}
                         selectedCharacter={selectedCharacter}
                         inputValue={inputValue}
                         isCorrect={isCorrect}
+                        rows={trackerTableRows}
                         displayInputBorder={displayInputBorder}
                         handleInputChange={handleInputChange}
+                        handleOnEnter={handleOnEnter}
                     />
                 </div>
                 {/* RIGHT SIDEBAR */}
@@ -108,6 +134,11 @@ export const MainContent = () => {
             </div>
         </div>
     );
+}
+
+function createData(isCorrect, japanese, romaji) {
+    const icon = isCorrect ? <CheckCircleIcon color='success' /> : <DangerousIcon color='error' />;
+    return { isCorrect: icon, japanese, romaji };
 }
 
 function CustomTabPanel(props) {
@@ -145,8 +176,11 @@ export default function BasicTabs({
     selectedCharacter = null,
     inputValue = '',
     isCorrect = null,
+    rows = [],
     displayInputBorder = false,
     handleInputChange = () => { },
+    handleOnEnter = () => { },
+
 }) {
     const [value, setValue] = useState(0);
 
@@ -177,8 +211,10 @@ export default function BasicTabs({
                     selectedCharacter={selectedCharacter}
                     inputValue={inputValue}
                     isCorrect={isCorrect}
+                    rows={rows}
                     displayInputBorder={displayInputBorder}
                     handleInputChange={handleInputChange}
+                    handleOnEnter={handleOnEnter}
                 />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
