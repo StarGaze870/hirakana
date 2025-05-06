@@ -20,7 +20,7 @@ export const HirakanaBasic = ({
                 <div className='col d-flex flex-column'>
                     {/* SCORE */}
                     <div className='col flex-fill d-flex justify-content-center pt-4'>
-                        <h1 className='m-0'>
+                        <h1 className='m-0 opacity-50'>
                             {tracker.size < 1 ? 1 : tracker.size} / {hirakanaArray.length}
                         </h1>
                     </div>

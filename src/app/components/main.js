@@ -157,10 +157,17 @@ export default function BasicTabs({
     return (
         <Box sx={{ display: 'flex', height: '100%', width: '100%', flexDirection: 'column' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs centered value={value} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label="Hirakana" {...a11yProps(0)} />
-                    <Tab label="Advance Hirakana" {...a11yProps(1)} />
-                    <Tab label="Kanji" {...a11yProps(2)} />
+                <Tabs centered value={value} onChange={handleChange}
+                    slotProps={{
+                        indicator: {
+                            style: { backgroundColor: 'red' }
+                        }
+                    }}
+                    textColor='inherit'
+                    aria-label="basic tabs example">
+                    <Tab label="Hirakana" sx={{ color: value == 0 ? 'red' : '' }} {...a11yProps(0)} />
+                    <Tab label="Advance Hirakana" sx={{ color: value == 1 ? 'red' : '' }} {...a11yProps(1)} />
+                    <Tab label="Kanji" sx={{ color: value == 2 ? 'red' : '' }} {...a11yProps(2)} />
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
