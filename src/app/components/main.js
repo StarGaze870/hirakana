@@ -101,9 +101,9 @@ export const MainContent = () => {
             <div className='d-flex flex-row w-100'>
 
                 {/* LEFT SIDEBAR */}
-                <div className="col-1 d-none d-lg-block bg-danger">
+                <div className="col-1 d-none d-lg-block">
                     <img
-                        src="https://occ-0-8407-90.1.nflxso.net/dnm/api/v6/Z-WHgqd_TeJxSuha8aZ5WpyLcX8/AAAABdIFYfkylotuQsosH1WlGXHoouJSR59IKXL-xHz1EBGnDra3h7PiJ0E7Oe8wZzKk0hpHSKQGHi7VrGSs64kozAD0u9dXXKO-T4SM.jpg?r=33e"
+                        src="https://thejapanmedia.com/wp-content/uploads/2021/12/2079_thumb.webp"
                         alt="Ad Banner"
                         className="img-fluid w-100 h-100 object-fit-cover"
                     />
@@ -124,9 +124,9 @@ export const MainContent = () => {
                     />
                 </div>
                 {/* RIGHT SIDEBAR */}
-                <div className="col-1 d-none d-lg-block bg-warning">
+                <div className="col-1 d-none d-lg-block">
                     <img
-                        src="https://occ-0-8407-90.1.nflxso.net/dnm/api/v6/Z-WHgqd_TeJxSuha8aZ5WpyLcX8/AAAABdIFYfkylotuQsosH1WlGXHoouJSR59IKXL-xHz1EBGnDra3h7PiJ0E7Oe8wZzKk0hpHSKQGHi7VrGSs64kozAD0u9dXXKO-T4SM.jpg?r=33e"
+                        src="https://thejapanmedia.com/wp-content/uploads/2021/12/2079_thumb.webp"
                         alt="Ad Banner"
                         className="img-fluid w-100 h-100 object-fit-cover"
                     />
