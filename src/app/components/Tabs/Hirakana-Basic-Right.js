@@ -34,11 +34,9 @@ export const HirakanaBasicRightSide = ({ rows = [] }) => {
                         return (
                             <TableRow hover role="checkbox" tabIndex={-1} key={row.japanese}>
                                 {columns.map((column) => {
-                                    const value = row[column.id];
-                                    const object = typeof value === 'boolean' ? value ? <CheckCircleIcon /> : <DangerousIcon /> : value;
                                     return (
                                         <TableCell key={column.id} align='center' sx={{ maxWidth: '10px' }}>
-                                            {object}
+                                            {row[column.id]}
                                         </TableCell>
                                     );
                                 })}
