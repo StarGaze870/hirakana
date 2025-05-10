@@ -1,0 +1,22 @@
+import ReplayIcon from '@mui/icons-material/Replay';
+import { IconButton, Tooltip } from '@mui/material';
+import { HirakanaBasicRightSide } from '../Tabs/Hirakana-Basic-Right';
+
+export const SidebarRight = ({ rows = [] }) => {
+
+    return (
+        <div className="d-flex flex-fill flex-column">
+            <div className={`d-flex flex-column flex-lg-grow-1 py-4`} style={{ height: 300 }}>
+                <div className="d-flex justify-content-between align-items-end px-2 pb-1 pt-1">
+                    <span className="opacity-50">History</span>
+                    <Tooltip className='' title='Restart' placement='left-start'>
+                        <IconButton className="p-0">
+                            <ReplayIcon color="primary" className="opacity-75 me-lg-2" />
+                        </IconButton>
+                    </Tooltip>
+                </div>
+                <HirakanaBasicRightSide rows={rows} />
+            </div>
+        </div>
+    );
+}
