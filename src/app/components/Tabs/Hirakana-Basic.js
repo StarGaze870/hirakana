@@ -1,6 +1,8 @@
 import { IconButton, MenuItem, Select, Tooltip } from "@mui/material";
 import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
-import { SidebarRight } from "../main/sidebar-right";
+import { MainSidebarRight } from "../main/sidebar-right";
+import { MainSidebarLeft } from "../main/sidebar-left";
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 
 export const HirakanaBasic = ({
     hirakanaArray = [],
@@ -17,31 +19,31 @@ export const HirakanaBasic = ({
     return (
 
         <div className='d-flex flex-grow-1'>
-            {/* LEFT SIDE  */}
-            <div className='d-flex flex-grow-1 flex-column flex-lg-row'>
-                <div className="col">
-                    <div className="d-flex flex-column object-fit-contain px-4 px-lg-0 ps-lg-5 pt-4">
+            <div className='d-flex flex-fill flex-column flex-xl-row'>
+                {/* LEFT SIDE  */}
+                <div className="col d-flex order-3 order-xl-1 pt-4">
+                    <MainSidebarLeft />
+                </div>
+                {/* CENTER */}
+                <div className='col order-1 order-xl-2 d-flex flex-column pb-xl-4 pb-xxl-2 pt-4'>
+                    {/* DIFFICULTY */}
+                    <div className="d-flex flex-column px-4">
                         <span className="opacity-50 ps-2 pb-1 pt-1">Difficulty</span>
-                        {/* <h5 className="m-0 object-fit-contain pe-3" style={{ whiteSpace: 'nowrap' }}>Difficulty <span>:</span></h5> */}
                         <Select
                             style={{ minWidth: '10rem', maxHeight: '57px', minHeight: '57px' }}
                             fullWidth
                             value={21}
                         // value={age}
                         // onChange={handleChange}
-                        // displayEmpty
                         >
                             <MenuItem value={20}>Easy</MenuItem>
                             <MenuItem value={21}>Medium</MenuItem>
                             <MenuItem value={22}>Hard</MenuItem>
                         </Select>
                     </div>
-                </div>
-                {/* CENTER */}
-                <div className='col d-flex flex-column'>
                     {/* SCORE */}
                     <div className='col flex-fill d-flex pt-4 justify-content-center'>
-                        <p className="m-0 opacity-25 fs-5 pt-3">
+                        <p className="m-0 opacity-25 fs-5 pt-xl-2">
                             {tracker.size < 1 ? 1 : tracker.size} / {hirakanaArray.length}
                         </p>
                     </div>
@@ -59,6 +61,11 @@ export const HirakanaBasic = ({
                                 handleOnEnter();
                             }}
                             className="position-relative">
+                            <Tooltip className="position-absolute p-0" style={{ top: '-1.9rem', left: '0.3rem', zIndex: 5 }} title='Library' placement='right-start'>
+                                <IconButton>
+                                    <MenuBookIcon className="opacity-50" color="info" />
+                                </IconButton>
+                            </Tooltip>
                             <Tooltip className="position-absolute p-0" style={{ top: '-1.9rem', right: '0.3rem', zIndex: 5 }} title='Hint' placement='right-start'>
                                 <IconButton>
                                     <EmojiObjectsIcon className="opacity-50" color="warning" />
@@ -83,9 +90,13 @@ export const HirakanaBasic = ({
                     </div>
                 </div>
                 {/* RIGHT */}
-                <div className="col px-4 px-lg-0 pe-lg-5 d-flex">
-                    <SidebarRight />
+                <div className="col order-2 order-xl-3 px-4 px-xl-0 pe-xl-5 d-flex">
+                    <MainSidebarRight rows={rows} />
                 </div>
+                {/* LEFT (SHOWED WHEN ON SMALLER SCREENS)
+                <div className="col pt-4 d-block d-xl-none">
+                    <MainSidebarLeft />
+                </div> */}
             </div>
         </div >
     );

@@ -106,14 +106,14 @@ export const MainContent = () => {
                 {/* LEFT SIDEBAR */}
                 <div className="col-1 d-none d-lg-block">
                     <img
-                        src="https://thejapanmedia.com/wp-content/uploads/2021/12/2079_thumb.webp"
+                        src="https://blog.sakura.co/wp-content/uploads/2022/10/sakuraco_momiji-thumbnail.png"
                         alt="Ad Banner"
                         className="img-fluid w-100 h-100 object-fit-cover"
                     />
                 </div>
 
                 {/* MAIN CONTENT */}
-                <div className="col d-flex">
+                <div className="col d-flex pt-1">
                     <BasicTabs
                         hirakanaArray={hirakanaArray}
                         tracker={trackerCounter}
@@ -129,7 +129,7 @@ export const MainContent = () => {
                 {/* RIGHT SIDEBAR */}
                 <div className="col-1 d-none d-lg-block">
                     <img
-                        src="https://thejapanmedia.com/wp-content/uploads/2021/12/2079_thumb.webp"
+                        src="https://blog.sakura.co/wp-content/uploads/2022/10/sakuraco_momiji-thumbnail.png"
                         alt="Ad Banner"
                         className="img-fluid w-100 h-100 object-fit-cover"
                     />

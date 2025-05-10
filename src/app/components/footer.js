@@ -7,7 +7,7 @@ export const Footer = () => {
             </div>
             <div className="col main-header-ad-banner">
                 <img
-                    src="https://thejapanmedia.com/wp-content/uploads/2021/12/2079_thumb.webp"
+                    src="https://blog.sakura.co/wp-content/uploads/2022/10/sakuraco_momiji-thumbnail.png"
                     alt="Ad Banner"
                     className="img-fluid w-100 h-100 object-fit-cover"
                 />

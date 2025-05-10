@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { Footer } from "./components/footer";
-import { Header } from "./components/header";
 import { MainContent } from "./components/main";
+import Header from './components/header';
 
 export default function Home() {
 
@@ -21,7 +21,7 @@ export default function Home() {
         {/* Open Graph / Social */}
         <meta property="og:title" content="Hirakana - Japanese Quiz" />
         <meta property="og:description" content="Practice Hiragana, Katakana, and Kanji online for free." />
-        <meta property="og:image" content="https://thejapanmedia.com/wp-content/uploads/2021/12/2079_thumb.webp" />
+        <meta property="og:image" content="https://blog.sakura.co/wp-content/uploads/2022/10/sakuraco_momiji-thumbnail.png" />
         <meta property="og:url" content="https://hirakana.net" />
         <meta property="og:type" content="website" />
 
@@ -29,7 +29,7 @@ export default function Home() {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Hirakana - Japanese Quiz" />
         <meta name="twitter:description" content="Master Kana & Kanji through fun quizzes." />
-        <meta name="twitter:image" content="https://thejapanmedia.com/wp-content/uploads/2021/12/2079_thumb.webp" />
+        <meta name="twitter:image" content="https://blog.sakura.co/wp-content/uploads/2022/10/sakuraco_momiji-thumbnail.png" />
       </Head>
 
       {/* HEADER */}
