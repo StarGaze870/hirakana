@@ -100,7 +100,7 @@ export const MainContent = () => {
     }
 
     return (
-        <div className="d-flex flex-grow-1">
+        <div className="d-flex app-bar-margin flex-grow-1">
             <div className='d-flex flex-row w-100'>
 
                 {/* LEFT SIDEBAR */}

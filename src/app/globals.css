@@ -26,3 +26,25 @@
         max-height: 120px;
     }
 }
+
+/* ---------------------------- APP BAR ---------------------------- */
+
+.app-bar-margin {
+    margin-top: 56px;
+}
+
+@media (min-width: 600px) {
+
+    /* MUI 900 & up */
+    .app-bar-margin {
+        margin-top: 64px;
+    }
+}
+
+@media (min-width: 900px) {
+
+    /* MUI 900 & up */
+    .app-bar-margin {
+        margin-top: 68.5px;
+    }
+}
