@@ -39,6 +39,7 @@ export const MainSidebarLeft = () => {
 
     return (
         <div className="d-flex flex-fill flex-column px-4 px-lg-0 ps-lg-5 pb-5">
+
             {/* PROFILE */}
             <div className="d-flex flex-column">
                 <span className="opacity-50 ps-1 pt-1 pb-1">Player</span>
@@ -66,6 +67,7 @@ export const MainSidebarLeft = () => {
                     </div>
                 </div>
             </div>
+
             {/* STOPWATCH */}
             <Button>
                 <Tooltip className='' title='Pause / Resume' placement='auto'>
@@ -76,6 +78,7 @@ export const MainSidebarLeft = () => {
                     </div>
                 </Tooltip>
             </Button>
+
             {/* STREAK TABLE */}
             <div className="d-flex flex-fill flex-column">
                 <div className="ps-2">
@@ -120,6 +123,7 @@ export const MainSidebarLeft = () => {
                     </TableContainer>
                 </div>
             </div>
+            
         </div >
     );
 }

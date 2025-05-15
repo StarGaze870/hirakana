@@ -113,7 +113,7 @@ export const MainContent = () => {
                 </div>
 
                 {/* MAIN CONTENT */}
-                <div className="col d-flex pt-1">
+                <div className="col d-flex pt-1 flex-column">
                     <BasicTabs
                         hirakanaArray={hirakanaArray}
                         tracker={trackerCounter}

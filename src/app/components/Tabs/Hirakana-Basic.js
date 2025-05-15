@@ -20,10 +20,12 @@ export const HirakanaBasic = ({
 
         <div className='d-flex flex-grow-1'>
             <div className='d-flex flex-fill flex-column flex-xl-row'>
+
                 {/* LEFT SIDE  */}
                 <div className="col d-flex order-3 order-xl-1 pt-4">
                     <MainSidebarLeft />
                 </div>
+
                 {/* CENTER */}
                 <div className='col order-1 order-xl-2 d-flex flex-column pb-xl-4 pb-xxl-2 pt-4'>
                     {/* DIFFICULTY */}
@@ -89,14 +91,12 @@ export const HirakanaBasic = ({
                         </form>
                     </div>
                 </div>
+
                 {/* RIGHT */}
                 <div className="col order-2 order-xl-3 px-4 px-xl-0 pe-xl-5 d-flex">
                     <MainSidebarRight rows={rows} />
                 </div>
-                {/* LEFT (SHOWED WHEN ON SMALLER SCREENS)
-                <div className="col pt-4 d-block d-xl-none">
-                    <MainSidebarLeft />
-                </div> */}
+                
             </div>
         </div >
     );
