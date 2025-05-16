@@ -1,8 +1,7 @@
-import { Autocomplete, Avatar, Button, IconButton, MenuItem, Select, Tooltip } from "@mui/material";
+import { Autocomplete, Avatar, Button, IconButton, Tooltip } from "@mui/material";
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import PauseIcon from '@mui/icons-material/Pause';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 
 import Table from '@mui/material/Table';
@@ -38,7 +37,7 @@ export const MainSidebarLeft = () => {
     const [value, setValue] = React.useState(null);
 
     return (
-        <div className="d-flex flex-fill flex-column px-4 px-lg-0 ps-lg-5 pb-5">
+        <div className="d-flex flex-fill flex-column pb-5">
 
             {/* PROFILE */}
             <div className="d-flex flex-column">

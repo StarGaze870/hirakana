@@ -15,20 +15,25 @@ export default function BasicTabs({
     isCorrect = null,
     rows = [],
     displayInputBorder = false,
-    handleInputChange = () => { },
-    handleOnEnter = () => { },
-
+    handleInputChange,
+    handleOnEnter,
+    handleOnHintClick,
+    openRestartYesNoModal,
+    isRestartModalOpen,
+    handleRestartOnYesClick,
+    closeRestartYesNoModal,
+    isHintClicked = false,
 }) {
-    const [value, setValue] = useState(0);
+    const [tabValue, setTabValue] = useState(0);
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
+    const handleTabChange = (event, newValue) => {
+        setTabValue(newValue);
     };
 
     return (
         <Box sx={{ display: 'flex', height: '100%', width: '100%', flexDirection: 'column' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs centered value={value} onChange={handleChange}
+                <Tabs centered value={tabValue} onChange={handleTabChange}
                     slotProps={{
                         indicator: {
                             style: { backgroundColor: 'red' }
@@ -36,12 +41,12 @@ export default function BasicTabs({
                     }}
                     textColor='inherit'
                     aria-label="basic tabs example">
-                    <Tab label="Hirakana" sx={{ color: value == 0 ? 'red' : '' }} {...a11yProps(0)} />
-                    <Tab label="Advance Hirakana" sx={{ color: value == 1 ? 'red' : '' }} {...a11yProps(1)} />
-                    <Tab label="Kanji" sx={{ color: value == 2 ? 'red' : '' }} {...a11yProps(2)} />
+                    <Tab label="Hirakana" sx={{ color: tabValue == 0 ? 'red' : '' }} {...a11yProps(0)} />
+                    <Tab label="Advance Hirakana" sx={{ color: tabValue == 1 ? 'red' : '' }} {...a11yProps(1)} />
+                    <Tab label="Kanji" sx={{ color: tabValue == 2 ? 'red' : '' }} {...a11yProps(2)} />
                 </Tabs>
             </Box>
-            <CustomTabPanel value={value} index={0}>
+            <CustomTabPanel value={tabValue} index={0}>
                 <HirakanaBasic
                     hirakanaArray={hirakanaArray}
                     tracker={tracker}
@@ -52,14 +57,20 @@ export default function BasicTabs({
                     displayInputBorder={displayInputBorder}
                     handleInputChange={handleInputChange}
                     handleOnEnter={handleOnEnter}
+                    handleOnHintClick={handleOnHintClick}
+                    isHintClicked={isHintClicked}
+                    openRestartYesNoModal={openRestartYesNoModal}
+                    isRestartModalOpen={isRestartModalOpen}
+                    handleRestartOnYesClick={handleRestartOnYesClick}
+                    closeRestartYesNoModal={closeRestartYesNoModal}
                 />
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={1}>
+            <CustomTabPanel value={tabValue} index={1}>
                 <div className='d-flex flex-grow-1 justify-content-center align-items-center'>
                     <h1 className='m-0'>もうすぐ公開...</h1>
                 </div>
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={2}>
+            <CustomTabPanel value={tabValue} index={2}>
                 <div className='d-flex flex-grow-1 justify-content-center align-items-center'>
                     <h1 className='m-0'>もうすぐ公開...</h1>
                 </div>

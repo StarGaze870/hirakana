@@ -48,3 +48,10 @@
         margin-top: 68.5px;
     }
 }
+
+/* ---------------------------- BOOTSTRAP XL SIZE ---------------------------- */
+@media (min-width: 1200px) {
+  .main-footer-border {
+    border-right: 2px solid #c5c5c5;
+  }
+}

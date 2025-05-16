@@ -3,6 +3,7 @@ import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
 import { MainSidebarRight } from "../main/sidebar-right";
 import { MainSidebarLeft } from "../main/sidebar-left";
 import MenuBookIcon from '@mui/icons-material/MenuBook';
+import { useRef } from "react";
 
 export const HirakanaBasic = ({
     hirakanaArray = [],
@@ -12,14 +13,32 @@ export const HirakanaBasic = ({
     isCorrect = null,
     rows = [],
     displayInputBorder = false,
-    handleInputChange = () => { },
-    handleOnEnter = () => { },
+    handleInputChange = () => { console.error('handleInputChange is not set') },
+    handleOnEnter = () => { console.error('handleOnEnter is not set') },
+    handleOnHintClick = () => { console.error('handleOnHintClick is not set') },
+    openRestartYesNoModal,
+    isRestartModalOpen,
+    handleRestartOnYesClick,
+    closeRestartYesNoModal,
+    isHintClicked = false,
+
 }) => {
+
+    const inputRef = useRef();
+
+    const hintOpacity = isHintClicked ? 'opacity-100' : 'opacity-50';
+    const hintColor = isHintClicked ? '' : 'warning';
+    const hintToolTip = isHintClicked ? 'Hint Used' : 'Hint';
+
+    const onHintClickLocal = () => {
+        handleOnHintClick();
+        inputRef.current.focus();
+    }
 
     return (
 
         <div className='d-flex flex-grow-1'>
-            <div className='d-flex flex-fill flex-column flex-xl-row'>
+            <div className='d-flex flex-fill flex-column flex-xl-row px-3 px-xl-5'>
 
                 {/* LEFT SIDE  */}
                 <div className="col d-flex order-3 order-xl-1 pt-4">
@@ -64,16 +83,21 @@ export const HirakanaBasic = ({
                             }}
                             className="position-relative">
                             <Tooltip className="position-absolute p-0" style={{ top: '-1.9rem', left: '0.3rem', zIndex: 5 }} title='Library' placement='right-start'>
-                                <IconButton>
-                                    <MenuBookIcon className="opacity-50" color="info" />
-                                </IconButton>
+                                <span>
+                                    <IconButton className="p-0">
+                                        <MenuBookIcon className="opacity-50" color="info" />
+                                    </IconButton>
+                                </span>
                             </Tooltip>
-                            <Tooltip className="position-absolute p-0" style={{ top: '-1.9rem', right: '0.3rem', zIndex: 5 }} title='Hint' placement='right-start'>
-                                <IconButton>
-                                    <EmojiObjectsIcon className="opacity-50" color="warning" />
-                                </IconButton>
+                            <Tooltip className="position-absolute p-0" style={{ top: '-1.9rem', right: '0.3rem', zIndex: 5 }} title={hintToolTip} placement='right-start'>
+                                <span>
+                                    <IconButton className="p-0" onClick={onHintClickLocal} disabled={isHintClicked}>
+                                        <EmojiObjectsIcon className={hintOpacity} color={hintColor} />
+                                    </IconButton>
+                                </span>
                             </Tooltip>
                             <input
+                                ref={inputRef}
                                 className='w-100'
                                 type="text"
                                 placeholder="入力してください"
@@ -93,10 +117,16 @@ export const HirakanaBasic = ({
                 </div>
 
                 {/* RIGHT */}
-                <div className="col order-2 order-xl-3 px-4 px-xl-0 pe-xl-5 d-flex">
-                    <MainSidebarRight rows={rows} />
+                <div className="col order-2 order-xl-3 d-flex">
+                    <MainSidebarRight
+                        rows={rows}
+                        openRestartYesNoModal={openRestartYesNoModal}
+                        isRestartModalOpen={isRestartModalOpen}
+                        handleRestartOnYesClick={handleRestartOnYesClick}
+                        closeRestartYesNoModal={closeRestartYesNoModal}
+                    />
                 </div>
-                
+
             </div>
         </div >
     );

@@ -18,6 +18,8 @@ export const MainContent = () => {
     const [inputValue, setInputValue] = useState('');
     const [isCorrect, setIsCorrect] = useState(null);
     const [displayInputBorder, setValueDisplayInputBorder] = useState(false);
+    const [isHintClicked, setIsHintClicked] = useState(false);
+    const [isRestartModalOpen, setRestartModalOpen] = useState(false);
 
     useEffect(() => {
         generateUniqueCharacter();
@@ -52,6 +54,15 @@ export const MainContent = () => {
     function createData(isCorrect, japanese, romaji) {
         const icon = isCorrect ? <CheckCircleIcon color='success' /> : <DangerousIcon color='error' />;
         return { isCorrect: icon, japanese, romaji };
+    }
+
+    function restartTab_1() {
+        setTrackerCounter(new Set());
+        setInputValue('')
+        generateUniqueCharacter();
+        setIsHintClicked(false);
+
+        setTrackerTableRows([{}])
     }
 
     // ------------------------- HANDLE FUNCTIONS --------------------------------------------------  
@@ -95,8 +106,30 @@ export const MainContent = () => {
         generateUniqueCharacter();
         displayInputBorderFadeOutTimer();
         setIsCorrect(() => isCorrect);
+        setIsHintClicked(false);
 
         setTrackerTableRows([createData(isCorrect, character[0], character[1]), ...trackerTableRows])
+    }
+
+    const handleOnHintClick = () => {
+        if (isHintClicked) return;
+
+        const romaji = hirakanaArray[selectedCharacter][1];
+        const firstLetter = romaji[0];
+
+        setInputValue(prev => prev + firstLetter);
+        setIsHintClicked(true);
+    };
+
+    const openRestartYesNoModal = () => {
+        setRestartModalOpen(true);
+    }
+    const closeRestartYesNoModal = () => {
+        setRestartModalOpen(false);
+    }
+    const handleRestartOnYesClick = () => {
+        restartTab_1();
+        closeRestartYesNoModal();
     }
 
     return (
@@ -124,6 +157,12 @@ export const MainContent = () => {
                         displayInputBorder={displayInputBorder}
                         handleInputChange={handleInputChange}
                         handleOnEnter={handleOnEnter}
+                        handleOnHintClick={handleOnHintClick}
+                        isHintClicked={isHintClicked}
+                        openRestartYesNoModal={openRestartYesNoModal}
+                        isRestartModalOpen={isRestartModalOpen}
+                        handleRestartOnYesClick={handleRestartOnYesClick}
+                        closeRestartYesNoModal={closeRestartYesNoModal}
                     />
                 </div>
                 {/* RIGHT SIDEBAR */}
