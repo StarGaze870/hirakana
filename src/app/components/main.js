@@ -34,6 +34,23 @@ export const MainContent = () => {
         generateUniqueCharacter();
     }, [])
 
+    // PAUSE STOPWATCH WHEN PAGE IS HIDDEN
+    useEffect(() => {
+        const handleVisibilityChange = () => {
+            if (document.hidden) {
+                setIsStopwatchRunning(false);
+            } else if (trackerCounter.size > 1) {
+                setIsStopwatchRunning(true);
+            }
+        };
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        return () => {
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+        };
+    }, []);
+
+
     // ------------------------------ FUNCTIONS --------------------------------------------------  
 
     function displayInputBorderFadeOutTimer() {
@@ -87,12 +104,12 @@ export const MainContent = () => {
 
     const handleOnEnter = () => {
 
-        if (trackerCounter.size == hirakanaArray.length) {
+        const value = inputValue.trim();
+        if (value.length == 0 || trackerCounter.size == hirakanaArray.length) {
             return
         }
 
         const character = hirakanaArray[selectedCharacter];
-        const value = inputValue;
         let isCorrect = false;
 
         // EASY MODE, DOESN'T GO NEXT WHEN WRONG

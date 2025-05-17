@@ -31,9 +31,8 @@ export default function Stopwatch({
                 startTimeRef.current = performance.now();
             }
             animationRef.current = requestAnimationFrame(update);
-        } else {
-            cancelAnimationFrame(animationRef.current);
-            animationRef.current = null;
+        } else if (startTimeRef.current != null) {
+            pause();
         }
 
         return () => cancelAnimationFrame(animationRef.current);
@@ -61,16 +60,22 @@ export default function Stopwatch({
     };
 
     const pause = () => {
+        elapsedRef.current += performance.now() - startTimeRef.current;
+        startTimeRef.current = null;
+
+        cancelAnimationFrame(animationRef.current);
+        animationRef.current = null;
+    }
+
+    const handlePause = () => {
         if (isRunning && startTimeRef.current != null) {
-            const now = performance.now();
-            elapsedRef.current += now - startTimeRef.current;
-            startTimeRef.current = null;
+            pause();
             setIsRunning(false);
         }
     };
 
     const handleToggle = () => {
-        isRunning ? pause() : start();
+        isRunning ? handlePause() : start();
     };
 
     const disableButton = displayTime == 0;
