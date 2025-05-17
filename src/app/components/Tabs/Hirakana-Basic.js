@@ -6,6 +6,14 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { useRef } from "react";
 
 export const HirakanaBasic = ({
+    // LEFT
+    stopwatchStartTimeRef,
+    stopwatchElapsedTimeRef,
+    isStopwatchRunning,
+    setIsStopwatchRunning,
+    restartToggled,
+
+    // CENTER
     hirakanaArray = [],
     tracker = new Set(),
     selectedCharacter = null,
@@ -16,6 +24,8 @@ export const HirakanaBasic = ({
     handleInputChange = () => { console.error('handleInputChange is not set') },
     handleOnEnter = () => { console.error('handleOnEnter is not set') },
     handleOnHintClick = () => { console.error('handleOnHintClick is not set') },
+
+    // RIGHT
     openRestartYesNoModal,
     isRestartModalOpen,
     handleRestartOnYesClick,
@@ -42,7 +52,13 @@ export const HirakanaBasic = ({
 
                 {/* LEFT SIDE  */}
                 <div className="col d-flex order-3 order-xl-1 pt-4">
-                    <MainSidebarLeft />
+                    <MainSidebarLeft
+                        stopwatchStartTimeRef={stopwatchStartTimeRef}
+                        stopwatchElapsedTimeRef={stopwatchElapsedTimeRef}
+                        isStopwatchRunning={isStopwatchRunning}
+                        setIsStopwatchRunning={setIsStopwatchRunning}
+                        restartToggled={restartToggled}
+                    />
                 </div>
 
                 {/* CENTER */}

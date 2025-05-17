@@ -1,7 +1,7 @@
 'use client'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Hiragana } from '../texts/Hiragana'
 import { Katakana } from '../texts/Katakana'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -12,6 +12,13 @@ const hirakanaArray = Hiragana.concat(Katakana);
 
 export const MainContent = () => {
 
+    // LEFT
+    const stopwatchStartTimeRef = useRef(null);
+    const stopwatchElapsedTimeRef = useRef(0);
+    const [isStopwatchRunning, setIsStopwatchRunning] = useState(false);
+    const [restartToggled, setIsRestartToggled] = useState(false);
+
+    // CENTER
     const [trackerCounter, setTrackerCounter] = useState(new Set());
     const [trackerTableRows, setTrackerTableRows] = useState([]);
     const [selectedCharacter, setSelectedCharacter] = useState(null);
@@ -19,6 +26,8 @@ export const MainContent = () => {
     const [isCorrect, setIsCorrect] = useState(null);
     const [displayInputBorder, setValueDisplayInputBorder] = useState(false);
     const [isHintClicked, setIsHintClicked] = useState(false);
+
+    // SIDEBAR RIGHT
     const [isRestartModalOpen, setRestartModalOpen] = useState(false);
 
     useEffect(() => {
@@ -61,6 +70,7 @@ export const MainContent = () => {
         setInputValue('')
         generateUniqueCharacter();
         setIsHintClicked(false);
+        setIsRestartToggled(true);
 
         setTrackerTableRows([{}])
     }
@@ -107,6 +117,8 @@ export const MainContent = () => {
         displayInputBorderFadeOutTimer();
         setIsCorrect(() => isCorrect);
         setIsHintClicked(false);
+        setIsStopwatchRunning(true);
+        setIsRestartToggled(false);
 
         setTrackerTableRows([createData(isCorrect, character[0], character[1]), ...trackerTableRows])
     }
@@ -128,6 +140,10 @@ export const MainContent = () => {
         setRestartModalOpen(false);
     }
     const handleRestartOnYesClick = () => {
+        stopwatchStartTimeRef.current = 0;
+        stopwatchElapsedTimeRef.current = 0;
+        setIsStopwatchRunning(false);
+
         restartTab_1();
         closeRestartYesNoModal();
     }
@@ -148,17 +164,27 @@ export const MainContent = () => {
                 {/* MAIN CONTENT */}
                 <div className="col d-flex pt-1 flex-column">
                     <BasicTabs
+                        // LEFT
+                        stopwatchStartTimeRef={stopwatchStartTimeRef}
+                        stopwatchElapsedTimeRef={stopwatchElapsedTimeRef}
+                        isStopwatchRunning={isStopwatchRunning}
+                        setIsStopwatchRunning={setIsStopwatchRunning}
+                        restartToggled={restartToggled}
+
+                        // CENTER
                         hirakanaArray={hirakanaArray}
                         tracker={trackerCounter}
                         selectedCharacter={selectedCharacter}
                         inputValue={inputValue}
                         isCorrect={isCorrect}
-                        rows={trackerTableRows}
                         displayInputBorder={displayInputBorder}
                         handleInputChange={handleInputChange}
                         handleOnEnter={handleOnEnter}
                         handleOnHintClick={handleOnHintClick}
                         isHintClicked={isHintClicked}
+
+                        // RIGHT
+                        rows={trackerTableRows}
                         openRestartYesNoModal={openRestartYesNoModal}
                         isRestartModalOpen={isRestartModalOpen}
                         handleRestartOnYesClick={handleRestartOnYesClick}

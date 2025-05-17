@@ -1,7 +1,6 @@
-import { Autocomplete, Avatar, Button, IconButton, Tooltip } from "@mui/material";
+import { Autocomplete, Avatar, IconButton, Tooltip } from "@mui/material";
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
-import PauseIcon from '@mui/icons-material/Pause';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 
 import Table from '@mui/material/Table';
@@ -10,6 +9,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import Stopwatch from "./stopwatch-left";
 
 const columns = [
     { id: 'streak', label: 'Streak', minWidth: 5 },
@@ -27,7 +27,13 @@ const rows = [
     { streak: 6, date: 'May 10, 8:55 PM' },
 ]
 
-export const MainSidebarLeft = () => {
+export const MainSidebarLeft = ({
+    stopwatchStartTimeRef,
+    stopwatchElapsedTimeRef,
+    isStopwatchRunning,
+    setIsStopwatchRunning,
+    restartToggled,
+}) => {
 
     const defaultProps = {
         options: players,
@@ -68,15 +74,13 @@ export const MainSidebarLeft = () => {
             </div>
 
             {/* STOPWATCH */}
-            <Button>
-                <Tooltip className='' title='Pause / Resume' placement='auto'>
-                    <div className="d-flex justify-content-center align-items-center flex-row py-5 gap-3">
-                        <h1 className="m-0 text-black opacity-50" style={{ fontSize: '3.5rem' }}>00:00:00</h1>
-                        <PauseIcon className='opacity-75' color="error" />
-                        {/* <PlayArrowIcon className='opacity-75' color="success" /> */}
-                    </div>
-                </Tooltip>
-            </Button>
+            <Stopwatch
+                startTimeRef={stopwatchStartTimeRef}
+                elapsedRef={stopwatchElapsedTimeRef}
+                isRunning={isStopwatchRunning}
+                setIsRunning={setIsStopwatchRunning}
+                reset={restartToggled}
+            />
 
             {/* STREAK TABLE */}
             <div className="d-flex flex-fill flex-column">
@@ -122,7 +126,7 @@ export const MainSidebarLeft = () => {
                     </TableContainer>
                 </div>
             </div>
-            
+
         </div >
     );
 }

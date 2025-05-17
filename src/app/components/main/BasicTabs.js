@@ -1,5 +1,3 @@
-'use client'
-
 import { HirakanaBasic } from '../Tabs/Hirakana-Basic'
 import { useState } from 'react'
 import PropTypes from 'prop-types';
@@ -8,6 +6,14 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 
 export default function BasicTabs({
+    // LEFT
+    stopwatchStartTimeRef,
+    stopwatchElapsedTimeRef,
+    isStopwatchRunning,
+    setIsStopwatchRunning,
+    restartToggled,
+
+    // CENTER
     hirakanaArray = [],
     tracker = new Set(),
     selectedCharacter = null,
@@ -18,11 +24,14 @@ export default function BasicTabs({
     handleInputChange,
     handleOnEnter,
     handleOnHintClick,
+
+    // RIGHT
     openRestartYesNoModal,
     isRestartModalOpen,
     handleRestartOnYesClick,
     closeRestartYesNoModal,
     isHintClicked = false,
+
 }) {
     const [tabValue, setTabValue] = useState(0);
 
@@ -48,6 +57,14 @@ export default function BasicTabs({
             </Box>
             <CustomTabPanel value={tabValue} index={0}>
                 <HirakanaBasic
+                    // LEFT
+                    stopwatchStartTimeRef={stopwatchStartTimeRef}
+                    stopwatchElapsedTimeRef={stopwatchElapsedTimeRef}
+                    isStopwatchRunning={isStopwatchRunning}
+                    setIsStopwatchRunning={setIsStopwatchRunning}
+                    restartToggled={restartToggled}
+
+                    // CENTER
                     hirakanaArray={hirakanaArray}
                     tracker={tracker}
                     selectedCharacter={selectedCharacter}
@@ -59,6 +76,8 @@ export default function BasicTabs({
                     handleOnEnter={handleOnEnter}
                     handleOnHintClick={handleOnHintClick}
                     isHintClicked={isHintClicked}
+
+                    // RIGHT
                     openRestartYesNoModal={openRestartYesNoModal}
                     isRestartModalOpen={isRestartModalOpen}
                     handleRestartOnYesClick={handleRestartOnYesClick}
