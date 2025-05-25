@@ -24,6 +24,9 @@ export default function BasicTabs({
     handleInputChange,
     handleOnEnter,
     handleOnHintClick,
+    difficulty,
+    onDifficultyChange,
+    isDifficultyDisabled,
 
     // RIGHT
     openRestartYesNoModal,
@@ -76,6 +79,9 @@ export default function BasicTabs({
                     handleOnEnter={handleOnEnter}
                     handleOnHintClick={handleOnHintClick}
                     isHintClicked={isHintClicked}
+                    difficulty={difficulty}
+                    onDifficultyChange={onDifficultyChange}
+                    isDifficultyDisabled={isDifficultyDisabled}
 
                     // RIGHT
                     openRestartYesNoModal={openRestartYesNoModal}

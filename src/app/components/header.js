@@ -127,9 +127,9 @@ function Header() {
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar 
-                                alt="Remy Sharp" 
-                                src="https://scontent-nrt1-1.xx.fbcdn.net/v/t39.30808-6/470152297_1665764977338906_7137820824601376450_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=Z_z4MG-yhkoQ7kNvwHcfYEl&_nc_oc=AdkryP6Tly_ViQp8PwZUixcYBhleTVowO1C5BD0IvvnvidQXwiayvzudVLecYHgY6EY&_nc_zt=23&_nc_ht=scontent-nrt1-1.xx&_nc_gid=1DytzufewIWFguLx_GytpQ&oh=00_AfIvUH0h7FXMdcT4ZwtweTzTeU3WaTnMqNSXi6R48kbsXg&oe=6824DC43" />
+                                <Avatar
+                                    alt="Remy Sharp"
+                                />
                             </IconButton>
                         </Tooltip>
                         <Menu

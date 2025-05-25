@@ -7,6 +7,8 @@ import { Katakana } from '../texts/Katakana'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DangerousIcon from '@mui/icons-material/Dangerous';
 import BasicTabs from './main/BasicTabs'
+import { formatTime } from './main/mainFunctions'
+import { DIFFICULTY_EASY, DIFFICULTY_HARD, DIFFICULTY_MEDIUM } from '../constants'
 
 const hirakanaArray = Hiragana.concat(Katakana);
 
@@ -26,6 +28,8 @@ export const MainContent = () => {
     const [isCorrect, setIsCorrect] = useState(null);
     const [displayInputBorder, setValueDisplayInputBorder] = useState(false);
     const [isHintClicked, setIsHintClicked] = useState(false);
+    const [difficulty, setDifficulty] = useState(0);
+    const [isDifficultyDisabled, setIsDifficultyDisabled] = useState(false);
 
     // SIDEBAR RIGHT
     const [isRestartModalOpen, setRestartModalOpen] = useState(false);
@@ -88,12 +92,14 @@ export const MainContent = () => {
         generateUniqueCharacter();
         setIsHintClicked(false);
         setIsRestartToggled(true);
+        setIsDifficultyDisabled(false);
 
         setTrackerTableRows([{}])
     }
 
     // ------------------------- HANDLE FUNCTIONS --------------------------------------------------  
 
+    // CENTER
     const handleInputChange = (e) => {
 
         if (trackerCounter.size == hirakanaArray.length) {
@@ -105,39 +111,48 @@ export const MainContent = () => {
     const handleOnEnter = () => {
 
         const value = inputValue.trim();
-        if (value.length == 0 || trackerCounter.size == hirakanaArray.length) {
+        if (value.length == 0) {
+            return;
+        }
+
+        if (trackerCounter.size == hirakanaArray.length) {
+            // TODO: SAVE LAP TIME
             return
         }
 
         const character = hirakanaArray[selectedCharacter];
         let isCorrect = false;
 
-        // EASY MODE, DOESN'T GO NEXT WHEN WRONG
+        if (difficulty == DIFFICULTY_EASY) {
 
-        // if (value && value.toLowerCase() === hirakanaArray[selectedCharacter][1].toLowerCase()) {
-        //     generateUniqueCharacter();
-        //     setInputValue('')
-        //     displayInputBorderFadeOutTimer(true)
-        //     setIsCorrect(true);
-        //     return;
-        // }
+            if (value && value.toLowerCase() === character[1].toLowerCase()) {
+                setTrackerTableRows([createData(true, character[0], character[1]), ...trackerTableRows])
+                generateUniqueCharacter();
+                setIsHintClicked(false);
+                setInputValue('')
 
-        // displayInputBorderFadeOutTimer(false)
-        // setIsCorrect(() => false);
+                isCorrect = true;
+            }
 
-        if (value && value.toLowerCase() === character[1].toLowerCase()) {
-            isCorrect = true;
+        }
+        else if (difficulty == DIFFICULTY_MEDIUM || difficulty == DIFFICULTY_HARD) {
+
+            if (value && value.toLowerCase() === character[1].toLowerCase()) {
+                isCorrect = true;
+            }
+
+            setInputValue('')
+            generateUniqueCharacter();
+            setIsHintClicked(false);
+
+            setTrackerTableRows([createData(isCorrect, character[0], character[1]), ...trackerTableRows])
         }
 
-        setInputValue('')
-        generateUniqueCharacter();
-        displayInputBorderFadeOutTimer();
-        setIsCorrect(() => isCorrect);
-        setIsHintClicked(false);
         setIsStopwatchRunning(true);
         setIsRestartToggled(false);
-
-        setTrackerTableRows([createData(isCorrect, character[0], character[1]), ...trackerTableRows])
+        setIsDifficultyDisabled(true);
+        displayInputBorderFadeOutTimer();
+        setIsCorrect(() => isCorrect);
     }
 
     const handleOnHintClick = () => {
@@ -146,24 +161,37 @@ export const MainContent = () => {
         const romaji = hirakanaArray[selectedCharacter][1];
         const firstLetter = romaji[0];
 
-        setInputValue(prev => prev + firstLetter);
+        setIsStopwatchRunning(true);
+        setInputValue(firstLetter);
         setIsHintClicked(true);
     };
 
+    const onDifficultyChange = (e) => {
+        setDifficulty(e.target.value)
+    }
+
+    // RIGHT
     const openRestartYesNoModal = () => {
         setRestartModalOpen(true);
     }
+
     const closeRestartYesNoModal = () => {
         setRestartModalOpen(false);
     }
+
     const handleRestartOnYesClick = () => {
         stopwatchStartTimeRef.current = 0;
         stopwatchElapsedTimeRef.current = 0;
         setIsStopwatchRunning(false);
+        setIsRestartToggled(true);
 
         restartTab_1();
         closeRestartYesNoModal();
     }
+
+    // TODO: SAVE
+    // ACTUAL TIME STAMP WHEN PAUSED
+    // console.log(formatTime(stopwatchElapsedTimeRef.current))
 
     return (
         <div className="d-flex app-bar-margin flex-grow-1">
@@ -199,6 +227,9 @@ export const MainContent = () => {
                         handleOnEnter={handleOnEnter}
                         handleOnHintClick={handleOnHintClick}
                         isHintClicked={isHintClicked}
+                        difficulty={difficulty}
+                        onDifficultyChange={onDifficultyChange}
+                        isDifficultyDisabled={isDifficultyDisabled}
 
                         // RIGHT
                         rows={trackerTableRows}

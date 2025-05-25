@@ -1,9 +1,11 @@
 import { IconButton, MenuItem, Select, Tooltip } from "@mui/material";
-import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
 import { MainSidebarRight } from "../main/sidebar-right";
 import { MainSidebarLeft } from "../main/sidebar-left";
+import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
-import { useRef } from "react";
+import LibraryModal from "../modal/LibraryModal";
+import { useEffect, useRef, useState } from "react";
+import { DIFFICULTY_EASY, DIFFICULTY_HARD } from "@/app/constants";
 
 export const HirakanaBasic = ({
     // LEFT
@@ -24,6 +26,9 @@ export const HirakanaBasic = ({
     handleInputChange = () => { console.error('handleInputChange is not set') },
     handleOnEnter = () => { console.error('handleOnEnter is not set') },
     handleOnHintClick = () => { console.error('handleOnHintClick is not set') },
+    difficulty = 0,
+    isDifficultyDisabled = false,
+    onDifficultyChange = () => { console.error('onDifficultyChange is not set') },
 
     // RIGHT
     openRestartYesNoModal,
@@ -36,18 +41,68 @@ export const HirakanaBasic = ({
 
     const inputRef = useRef();
 
-    const hintOpacity = isHintClicked ? 'opacity-100' : 'opacity-50';
-    const hintColor = isHintClicked ? '' : 'warning';
-    const hintToolTip = isHintClicked ? 'Hint Used' : 'Hint';
+    const hintOpacity = isHintClicked
+        || difficulty != DIFFICULTY_EASY
+        ? 'opacity-100' : 'opacity-50';
+
+    const hintColor = isHintClicked
+        || difficulty != DIFFICULTY_EASY
+        ? '' : 'warning';
+
+    const hintToolTip =
+        isHintClicked
+            ? 'Hint Used'
+            : difficulty !== DIFFICULTY_EASY
+                ? 'Disabled'
+                : 'Hint';
+
+
+    const libraryColor = difficulty == DIFFICULTY_HARD ? '' : 'info'
+
+    const [isLibraryModalOpen, setLibraryModalOpen] = useState(false);
+
+    // AUTO FOCUS TO INPUT BOX WHEN CHANGING TABS
+    useEffect(() => {
+
+        inputRef.current.focus();
+        const handleVisibilityChange = () => {
+            if (document.hidden) {
+                inputRef.current.focus();
+            } else {
+                inputRef.current.focus();
+            }
+        };
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        return () => {
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+        };
+    }, []);
 
     const onHintClickLocal = () => {
         handleOnHintClick();
         inputRef.current.focus();
     }
 
+    const onLibraryClickLocal = () => {
+        setLibraryModalOpen(true);
+    }
+
+    const onLibraryClose = () => {
+        setLibraryModalOpen(false);
+
+        setTimeout(() => {
+            inputRef.current?.focus();
+        }, 10);
+    }
+
     return (
 
         <div className='d-flex flex-grow-1'>
+
+            {/* MODALS */}
+            <LibraryModal isModalOpen={isLibraryModalOpen} handleNoOnClick={onLibraryClose} />
+
             <div className='d-flex flex-fill flex-column flex-xl-row px-3 px-xl-5'>
 
                 {/* LEFT SIDE  */}
@@ -68,14 +123,14 @@ export const HirakanaBasic = ({
                         <span className="opacity-50 ps-2 pb-1 pt-1">Difficulty</span>
                         <Select
                             style={{ minWidth: '10rem', maxHeight: '57px', minHeight: '57px' }}
+                            disabled={isDifficultyDisabled}
                             fullWidth
-                            value={21}
-                        // value={age}
-                        // onChange={handleChange}
+                            value={difficulty}
+                            onChange={onDifficultyChange}
                         >
-                            <MenuItem value={20}>Easy</MenuItem>
-                            <MenuItem value={21}>Medium</MenuItem>
-                            <MenuItem value={22}>Hard</MenuItem>
+                            <MenuItem value={0}>Easy</MenuItem>
+                            <MenuItem value={1}>Medium</MenuItem>
+                            <MenuItem value={2}>Hard</MenuItem>
                         </Select>
                     </div>
                     {/* SCORE */}
@@ -100,19 +155,20 @@ export const HirakanaBasic = ({
                             className="position-relative">
                             <Tooltip className="position-absolute p-0" style={{ top: '-1.9rem', left: '0.3rem', zIndex: 5 }} title='Library' placement='right-start'>
                                 <span>
-                                    <IconButton className="p-0">
-                                        <MenuBookIcon className="opacity-50" color="info" />
+                                    <IconButton className="p-0" onClick={onLibraryClickLocal} disabled={difficulty == DIFFICULTY_HARD}>
+                                        <MenuBookIcon className="opacity-50" color={libraryColor} />
                                     </IconButton>
                                 </span>
                             </Tooltip>
                             <Tooltip className="position-absolute p-0" style={{ top: '-1.9rem', right: '0.3rem', zIndex: 5 }} title={hintToolTip} placement='right-start'>
                                 <span>
-                                    <IconButton className="p-0" onClick={onHintClickLocal} disabled={isHintClicked}>
+                                    <IconButton className="p-0" onClick={onHintClickLocal} disabled={isHintClicked || difficulty != DIFFICULTY_EASY}>
                                         <EmojiObjectsIcon className={hintOpacity} color={hintColor} />
                                     </IconButton>
                                 </span>
                             </Tooltip>
                             <input
+                                onClick={() => console.log('boxclicl')}
                                 ref={inputRef}
                                 className='w-100'
                                 type="text"

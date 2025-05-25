@@ -1,5 +1,4 @@
 import { Autocomplete, Avatar, IconButton, Tooltip } from "@mui/material";
-import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 
@@ -10,6 +9,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Stopwatch from "./stopwatch-left";
+import AddnewPlayerModal from "../modal/AddNewPlayerModal";
+import { useEffect, useState } from "react";
+import { getUserData, insertNewUserName } from "./mainFunctions";
+import { ADD_NEW_PLAYER } from "@/app/constants";
 
 const columns = [
     { id: 'streak', label: 'Streak', minWidth: 5 },
@@ -35,15 +38,60 @@ export const MainSidebarLeft = ({
     restartToggled,
 }) => {
 
+    const [userNames, setUserNames] = useState([]);
+    const [isAddPlayerModalOpen, setIsAddPlayerModalOpen] = useState(null);
+    const [selectedUser, setSelectedUser] = useState(null);
+
+    useEffect(() => {
+        setupUserData();
+    }, [])
+
+    function setupUserData() {
+        let userData = getUserData();
+        userData = [{ username: ADD_NEW_PLAYER }, ...userData]
+        const filtered = userData.map((e) => ({ username: e.username }));
+        setSelectedUser(filtered.length > 1 ? filtered[1] : filtered[0]);
+        setUserNames(filtered);
+    }
+
     const defaultProps = {
-        options: players,
-        getOptionLabel: (option) => option.name,
+        options: userNames,
+        getOptionLabel: (option) => option.username,
     };
 
-    const [value, setValue] = React.useState(null);
+    const profileOnChange = (event, newValue) => {
+        if (newValue.username === ADD_NEW_PLAYER) {
+            openAddNewPlayerModal();
+        }
+        setSelectedUser(newValue);
+    }
+
+    const handleOnAddNewPlayer = (name) => {
+        insertNewUserName(name);
+        setupUserData();
+        closeAddNewPlayerModal();
+    }
+
+    const handleAddNewPlayerWhenEmpty = () => {
+        if (userNames.length === 1) {
+            openAddNewPlayerModal();
+        }
+    }
+
+    const openAddNewPlayerModal = () => {
+        setIsAddPlayerModalOpen(true);
+    }
+
+    const closeAddNewPlayerModal = () => {
+        console.log(getUserData()) // TODO: REMOVE
+        console.log(selectedUser.username)
+        setIsAddPlayerModalOpen(false);
+    }
 
     return (
         <div className="d-flex flex-fill flex-column pb-5">
+
+            <AddnewPlayerModal isModalOpen={isAddPlayerModalOpen} handleYesOnClick={handleOnAddNewPlayer} handleNoOnClick={closeAddNewPlayerModal} />
 
             {/* PROFILE */}
             <div className="d-flex flex-column">
@@ -51,22 +99,19 @@ export const MainSidebarLeft = ({
                 <div className="d-flex flex-row align-items-center px-1">
                     <div className="pt-3 pe-3">
                         <Avatar
-                            src="https://scontent-nrt1-1.xx.fbcdn.net/v/t39.30808-6/470152297_1665764977338906_7137820824601376450_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=Z_z4MG-yhkoQ7kNvwHcfYEl&_nc_oc=AdkryP6Tly_ViQp8PwZUixcYBhleTVowO1C5BD0IvvnvidQXwiayvzudVLecYHgY6EY&_nc_zt=23&_nc_ht=scontent-nrt1-1.xx&_nc_gid=1DytzufewIWFguLx_GytpQ&oh=00_AfIvUH0h7FXMdcT4ZwtweTzTeU3WaTnMqNSXi6R48kbsXg&oe=6824DC43"
-                            {...stringAvatar('ALESA')}
+                            {...stringAvatar(selectedUser?.username || 'NP')}
                         />
                     </div>
                     <div className="col d-flex flex-fill pt-4">
                         <Autocomplete
-                            value={{ name: 'Alyssa Jumapao' }}
-                            onChange={(event, newValue) => {
-                                setValue(newValue);
-                            }}
+                            value={userNames.length > 1 ? selectedUser : { username: ADD_NEW_PLAYER }}
+                            onChange={profileOnChange}
                             fullWidth
                             {...defaultProps}
                             id="disable-clearable"
                             disableClearable
                             renderInput={(params) => (
-                                <TextField {...params} label="" variant="standard" />
+                                <TextField {...params} onClick={handleAddNewPlayerWhenEmpty} label="" variant="standard" />
                             )}
                         />
                     </div>
@@ -135,20 +180,27 @@ export const MainSidebarLeft = ({
 
 function stringToColor(string) {
     let hash = 0;
-    let i;
 
-    /* eslint-disable no-bitwise */
-    for (i = 0; i < string.length; i += 1) {
+    for (let i = 0; i < string.length; i++) {
         hash = string.charCodeAt(i) + ((hash << 5) - hash);
     }
 
     let color = '#';
 
-    for (i = 0; i < 3; i += 1) {
-        const value = (hash >> (i * 8)) & 0xff;
+    for (let i = 0; i < 3; i++) {
+        let value = (hash >> (i * 8)) & 0xff;
+
+        // Bias: boost red, lighten green and blue
+        if (i === 0) {
+            // Red component
+            value = Math.min(255, Math.floor(value * 0.7 + 100)); // 100–255
+        } else {
+            // Green & Blue component
+            value = Math.min(255, Math.floor(value * 0.4 + 120)); // 120–223
+        }
+
         color += `00${value.toString(16)}`.slice(-2);
     }
-    /* eslint-enable no-bitwise */
 
     return color;
 }
@@ -175,7 +227,7 @@ function stringAvatar(name) {
 }
 
 const players = [
-    { name: '--- New Player ---' },
+    { name: ADD_NEW_PLAYER },
     { name: 'Alyssa Jumapao' },
     { name: 'Lj Vincent Tudtud' },
     { name: 'Raph Bacordio' },

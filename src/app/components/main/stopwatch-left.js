@@ -18,6 +18,7 @@ export default function Stopwatch({
     const animationRef = useRef(null);
 
     useEffect(() => {
+
         if (reset && !isRunning) {
             setDisplayTime(0);
             cancelAnimationFrame(animationRef.current);
@@ -60,6 +61,11 @@ export default function Stopwatch({
     };
 
     const pause = () => {
+
+        if (reset) {
+            return;
+        }
+
         elapsedRef.current += performance.now() - startTimeRef.current;
         startTimeRef.current = null;
 
