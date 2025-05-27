@@ -53,10 +53,11 @@ export const HirakanaBasic = ({
         isHintClicked
             ? 'Hint Used'
             : difficulty !== DIFFICULTY_EASY
-                ? 'Disabled'
+                ? 'Hint Disabled'
                 : 'Hint';
 
-
+    const libraryOpacity = difficulty == DIFFICULTY_HARD ? 'opacity-100' : 'opacity-50'
+    const libraryToolTip = difficulty == DIFFICULTY_HARD ? 'Library Disabled' : 'Library'
     const libraryColor = difficulty == DIFFICULTY_HARD ? '' : 'info'
 
     const [isLibraryModalOpen, setLibraryModalOpen] = useState(false);
@@ -153,10 +154,10 @@ export const HirakanaBasic = ({
                                 handleOnEnter();
                             }}
                             className="position-relative">
-                            <Tooltip className="position-absolute p-0" style={{ top: '-1.9rem', left: '0.3rem', zIndex: 5 }} title='Library' placement='right-start'>
+                            <Tooltip className="position-absolute p-0" style={{ top: '-1.9rem', left: '0.3rem', zIndex: 5 }} title={libraryToolTip} placement='right-start'>
                                 <span>
                                     <IconButton className="p-0" onClick={onLibraryClickLocal} disabled={difficulty == DIFFICULTY_HARD}>
-                                        <MenuBookIcon className="opacity-50" color={libraryColor} />
+                                        <MenuBookIcon className={libraryOpacity} color={libraryColor} />
                                     </IconButton>
                                 </span>
                             </Tooltip>

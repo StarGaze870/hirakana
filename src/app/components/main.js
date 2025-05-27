@@ -17,6 +17,7 @@ export const MainContent = () => {
     // LEFT
     const stopwatchStartTimeRef = useRef(null);
     const stopwatchElapsedTimeRef = useRef(0);
+    const isGameStartedRef = useRef(false);
     const [isStopwatchRunning, setIsStopwatchRunning] = useState(false);
     const [restartToggled, setIsRestartToggled] = useState(false);
 
@@ -43,7 +44,7 @@ export const MainContent = () => {
         const handleVisibilityChange = () => {
             if (document.hidden) {
                 setIsStopwatchRunning(false);
-            } else if (trackerCounter.size > 1) {
+            } else if (trackerCounter.size > 1 || isGameStartedRef.current) {
                 setIsStopwatchRunning(true);
             }
         };
@@ -87,12 +88,14 @@ export const MainContent = () => {
     }
 
     function restartTab_1() {
-        setTrackerCounter(new Set());
-        setInputValue('')
-        generateUniqueCharacter();
-        setIsHintClicked(false);
-        setIsRestartToggled(true);
+        isGameStartedRef.current = false;
         setIsDifficultyDisabled(false);
+        setTrackerCounter(new Set());
+        setIsStopwatchRunning(false);
+        generateUniqueCharacter();
+        setIsRestartToggled(true);
+        setIsHintClicked(false);
+        setInputValue('')
 
         setTrackerTableRows([{}])
     }
@@ -148,6 +151,7 @@ export const MainContent = () => {
             setTrackerTableRows([createData(isCorrect, character[0], character[1]), ...trackerTableRows])
         }
 
+        isGameStartedRef.current = true;
         setIsStopwatchRunning(true);
         setIsRestartToggled(false);
         setIsDifficultyDisabled(true);
@@ -182,8 +186,6 @@ export const MainContent = () => {
     const handleRestartOnYesClick = () => {
         stopwatchStartTimeRef.current = 0;
         stopwatchElapsedTimeRef.current = 0;
-        setIsStopwatchRunning(false);
-        setIsRestartToggled(true);
 
         restartTab_1();
         closeRestartYesNoModal();
