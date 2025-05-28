@@ -196,7 +196,7 @@ export const MainSidebarLeft = ({
                                     return (
                                         <TableRow hover key={index} role="checkbox" tabIndex={-1}>
                                             <TableCell align='left' sx={{ maxWidth: '10px' }}>
-                                                {row.streak || row.lap}
+                                                {row.streak ?? row.lap}
                                             </TableCell>
                                             <TableCell align='left' sx={{ maxWidth: '10px' }}>
                                                 {row.date}
