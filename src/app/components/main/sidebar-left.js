@@ -43,33 +43,44 @@ export const MainSidebarLeft = ({
     }, [])
 
     useEffect(() => {
-        if (selectedTable == LAP_TABLE) {
-            setTableData(lapData);
-            setTableHeaders(SIDE_BAR_LEFT_LAP_HEADERS);
-        }
-        else if (selectedTable == STREAK_TABLE) {
-            setTableData(streakData);
-            setTableHeaders(SIDE_BAR_LEFT_STREAK_HEADERS);
-        }
-
+        setUserTableData();
     }, [selectedTable])
 
     useEffect(() => {
+        loadUsersData();
+    }, [stopwatchElapsedTimeRef.current]);
 
+    function loadUsersData() {
         let { streak, lap } = getStreakAndLap();
 
         streak = streak.map(e => ({ streak: e.c, date: DateNow_MMDDmmms(e.d) }));
         lap = lap.map(e => ({ lap: formatTime(e.t), date: DateNow_MMDDmmms(e.d) }));
 
+        setUserTableData(streak, lap, true);
         setStreakData(streak);
         setLapData(lap);
-        setTableData(lap);
+    }
 
-    }, [stopwatchElapsedTimeRef.current]);
+    function setUserTableData(rawStreak = [], rawLap = [], useLocal = false) {
+        if (selectedTable == LAP_TABLE) {
+            setTableData(useLocal ? rawLap : lapData);
+            setTableHeaders(SIDE_BAR_LEFT_LAP_HEADERS);
+        }
+        else if (selectedTable == STREAK_TABLE) {
+            setTableData(useLocal ? rawStreak : streakData);
+            setTableHeaders(SIDE_BAR_LEFT_STREAK_HEADERS);
+        }
+    }
 
     useEffect(() => {
         if (selectedUser) {
             setCurrentUserSelected(selectedUser.username);
+
+            const timer = setTimeout(() => {
+                loadUsersData();
+            }, 3);
+
+            return () => clearTimeout(timer);
         }
     }, [selectedUser])
 
