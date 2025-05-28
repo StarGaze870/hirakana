@@ -10,7 +10,8 @@ export default function Stopwatch({
     elapsedRef = null,
     isRunning = false,
     reset = false,
-    setIsRunning = () => { console.error('setIsRunning is empty') }
+    setIsRunning = () => { console.error('setIsRunning is empty') },
+    isGameEnded = false,
 
 }) {
 
@@ -38,6 +39,10 @@ export default function Stopwatch({
 
         return () => cancelAnimationFrame(animationRef.current);
     }, [isRunning]);
+
+    useEffect(() => {
+        setDisplayTime(elapsedRef.current)
+    }, [elapsedRef.current]);
 
     const update = () => {
         const now = performance.now();
@@ -87,7 +92,7 @@ export default function Stopwatch({
     const disableButton = displayTime == 0;
 
     return (
-        <Button onClick={handleToggle} disabled={disableButton}>
+        <Button onClick={handleToggle} disabled={disableButton || isGameEnded}>
             <Tooltip title="Pause / Resume" placement="auto">
                 <div className="d-flex flex-fill justify-content-center align-items-center flex-row py-5">
                     <h1 className="m-0 text-black opacity-50 pe-2" style={{ fontSize: '3.5rem', fontFamily: 'monospace' }}>

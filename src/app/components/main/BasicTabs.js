@@ -12,6 +12,7 @@ export default function BasicTabs({
     isStopwatchRunning,
     setIsStopwatchRunning,
     restartToggled,
+    isGameEnded,
 
     // CENTER
     hirakanaArray = [],
@@ -66,6 +67,7 @@ export default function BasicTabs({
                     isStopwatchRunning={isStopwatchRunning}
                     setIsStopwatchRunning={setIsStopwatchRunning}
                     restartToggled={restartToggled}
+                    isGameEnded={isGameEnded}
 
                     // CENTER
                     hirakanaArray={hirakanaArray}

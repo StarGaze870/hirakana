@@ -11,17 +11,10 @@ import TableRow from '@mui/material/TableRow';
 import Stopwatch from "./stopwatch-left";
 import AddnewPlayerModal from "../modal/AddNewPlayerModal";
 import { useEffect, useState } from "react";
-import { getCurrentUser, getUsersData, insertNewUserName, setCurrentUserSelected } from "./mainFunctions";
+import { DateNow_MMDDmmms, formatTime, getCurrentUser, getStreakAndLap, getUsersData, insertNewUserName, setCurrentUserSelected } from "./mainFunctions";
+import { SIDE_BAR_LEFT_LAP_TABLE as LAP_TABLE, SIDE_BAR_LEFT_LAP_HEADERS, SIDE_BAR_LEFT_STREAK_HEADERS } from "@/app/constants";
+import { SIDE_BAR_LEFT_STREAK_TABLE as STREAK_TABLE } from "@/app/constants";
 import { ADD_NEW_PLAYER } from "@/app/constants";
-
-const columns = [
-    { id: 'streak', label: 'Streak', minWidth: 5 },
-    { id: 'date', label: 'Date', minWidth: 10 },
-];
-
-const rows = [
-    { streak: 6, date: 'May 10, 8:55 PM' },
-]
 
 export const MainSidebarLeft = ({
     stopwatchStartTimeRef,
@@ -29,15 +22,50 @@ export const MainSidebarLeft = ({
     isStopwatchRunning,
     setIsStopwatchRunning,
     restartToggled,
+    isGameEnded,
+
 }) => {
 
     const [userNames, setUserNames] = useState([]);
     const [isAddPlayerModalOpen, setIsAddPlayerModalOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
 
+    // TABLE HISTORY
+    const [tableData, setTableData] = useState([]);
+    const [streakData, setStreakData] = useState([]);
+    const [lapData, setLapData] = useState([]);
+
+    const [selectedTable, setSelectedTable] = useState(LAP_TABLE);
+    const [tableHeaders, setTableHeaders] = useState(SIDE_BAR_LEFT_LAP_HEADERS);
+
     useEffect(() => {
         setupUserData();
     }, [])
+
+    useEffect(() => {
+        if (selectedTable == LAP_TABLE) {
+            setTableData(lapData);
+            setTableHeaders(SIDE_BAR_LEFT_LAP_HEADERS);
+        }
+        else if (selectedTable == STREAK_TABLE) {
+            setTableData(streakData);
+            setTableHeaders(SIDE_BAR_LEFT_STREAK_HEADERS);
+        }
+
+    }, [selectedTable])
+
+    useEffect(() => {
+
+        let { streak, lap } = getStreakAndLap();
+
+        streak = streak.map(e => ({ streak: e.c, date: DateNow_MMDDmmms(e.d) }));
+        lap = lap.map(e => ({ lap: formatTime(e.t), date: DateNow_MMDDmmms(e.d) }));
+
+        setStreakData(streak);
+        setLapData(lap);
+        setTableData(lap);
+
+    }, [stopwatchElapsedTimeRef.current]);
 
     useEffect(() => {
         if (selectedUser) {
@@ -93,6 +121,10 @@ export const MainSidebarLeft = ({
         setIsAddPlayerModalOpen(false);
     }
 
+    const handleOnSwitchTables = () => {
+        setSelectedTable(!selectedTable)
+    }
+
     return (
         <div className="d-flex flex-fill flex-column pb-5">
 
@@ -130,13 +162,14 @@ export const MainSidebarLeft = ({
                 isRunning={isStopwatchRunning}
                 setIsRunning={setIsStopwatchRunning}
                 reset={restartToggled}
+                isGameEnded={isGameEnded}
             />
 
             {/* STREAK TABLE */}
             <div className="d-flex flex-fill flex-column">
                 <div className="ps-2">
                     <Tooltip className="p-0" title='Library' placement='auto'>
-                        <IconButton>
+                        <IconButton onClick={handleOnSwitchTables}>
                             <SwapHorizIcon />
                         </IconButton>
                     </Tooltip>
@@ -146,11 +179,12 @@ export const MainSidebarLeft = ({
                         <Table stickyHeader aria-label="sticky table">
                             <TableHead>
                                 <TableRow>
-                                    {columns.map((column) => (
+                                    {tableHeaders.map((column) => (
                                         <TableCell
                                             key={column.id}
                                             align={column.align}
-                                            style={{ minWidth: column.minWidth, maxWidth: column.minWidth, backgroundColor: '', textAlign: '', color: 'black', fontWeight: 'bold' }}
+                                            className={column.opacity}
+                                            style={{ minWidth: column.minWidth, maxWidth: column.minWidth, backgroundColor: '', textAlign: '', color: 'black', fontWeight: column.fw }}
                                         >
                                             {column.label}
                                         </TableCell>
@@ -158,16 +192,16 @@ export const MainSidebarLeft = ({
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {rows.map((row) => {
-                                    <TableRow hover key={row.streak} role="checkbox" tabIndex={-1}>
-                                        <TableCell align='left' sx={{ maxWidth: '10px' }}>
-                                            {row.streak}
-                                        </TableCell>
-                                        <TableCell align='left' sx={{ maxWidth: '10px' }}>
-                                            {row.date}
-                                        </TableCell>
-                                    </TableRow>
-
+                                {tableData.map((row, index) => {
+                                    return (
+                                        <TableRow hover key={index} role="checkbox" tabIndex={-1}>
+                                            <TableCell align='left' sx={{ maxWidth: '10px' }}>
+                                                {row.streak || row.lap}
+                                            </TableCell>
+                                            <TableCell align='left' sx={{ maxWidth: '10px' }}>
+                                                {row.date}
+                                            </TableCell>
+                                        </TableRow>)
                                 })}
                             </TableBody>
                         </Table>

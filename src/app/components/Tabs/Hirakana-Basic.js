@@ -14,6 +14,7 @@ export const HirakanaBasic = ({
     isStopwatchRunning,
     setIsStopwatchRunning,
     restartToggled,
+    isGameEnded,
 
     // CENTER
     hirakanaArray = [],
@@ -43,10 +44,12 @@ export const HirakanaBasic = ({
 
     const hintOpacity = isHintClicked
         || difficulty != DIFFICULTY_EASY
+        || isGameEnded 
         ? 'opacity-100' : 'opacity-50';
 
     const hintColor = isHintClicked
         || difficulty != DIFFICULTY_EASY
+        || isGameEnded
         ? '' : 'warning';
 
     const hintToolTip =
@@ -114,6 +117,7 @@ export const HirakanaBasic = ({
                         isStopwatchRunning={isStopwatchRunning}
                         setIsStopwatchRunning={setIsStopwatchRunning}
                         restartToggled={restartToggled}
+                        isGameEnded={isGameEnded}
                     />
                 </div>
 
@@ -163,7 +167,7 @@ export const HirakanaBasic = ({
                             </Tooltip>
                             <Tooltip className="position-absolute p-0" style={{ top: '-1.9rem', right: '0.3rem', zIndex: 5 }} title={hintToolTip} placement='right-start'>
                                 <span>
-                                    <IconButton className="p-0" onClick={onHintClickLocal} disabled={isHintClicked || difficulty != DIFFICULTY_EASY}>
+                                    <IconButton className="p-0" onClick={onHintClickLocal} disabled={isHintClicked || difficulty != DIFFICULTY_EASY || isGameEnded}>
                                         <EmojiObjectsIcon className={hintOpacity} color={hintColor} />
                                     </IconButton>
                                 </span>

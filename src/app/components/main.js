@@ -7,8 +7,8 @@ import { Katakana } from '../texts/Katakana'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DangerousIcon from '@mui/icons-material/Dangerous';
 import BasicTabs from './main/BasicTabs'
-import { formatTime } from './main/mainFunctions'
 import { DIFFICULTY_EASY, DIFFICULTY_HARD, DIFFICULTY_MEDIUM } from '../constants'
+import { saveStreakAndLap } from './main/mainFunctions'
 
 const hirakanaArray = Hiragana.concat(Katakana);
 
@@ -36,6 +36,10 @@ export const MainContent = () => {
     // SIDEBAR RIGHT
     const [isRestartModalOpen, setRestartModalOpen] = useState(false);
 
+    // COMMON
+    const [streakCount, setStreakCount] = useState(0);
+    const [maxStreakCount, setMaxStreakCount] = useState(0);
+
     // PAUSE STOPWATCH WHEN PAGE IS HIDDEN
     useEffect(() => {
         const handleVisibilityChange = () => {
@@ -55,7 +59,7 @@ export const MainContent = () => {
     useEffect(() => {
 
         if (!isStopwatchRunning && isGameEnded) {
-            saveLapTime();
+            saveStreakAndLap(stopwatchElapsedTimeRef.current, maxStreakCount)
         }
 
     }, [isStopwatchRunning])
@@ -109,6 +113,8 @@ export const MainContent = () => {
         setIsRestartToggled(true);
         setIsHintClicked(false);
         setIsGameEnded(false);
+        setMaxStreakCount(0)
+        setStreakCount(0);
         setInputValue('')
 
         setTrackerTableRows([])
@@ -119,25 +125,6 @@ export const MainContent = () => {
         displayInputBorderFadeOutTimer();
         setIsStopwatchRunning(false);
         setIsGameEnded(true);
-    }
-
-    function saveLapTime() {
-
-        const totalTime = formatTime(stopwatchElapsedTimeRef.current);
-        const date = new Date();
-
-        const month = date.toLocaleString('en-US', { month: 'short' });
-        const day = date.getDate();
-        const time = date.toLocaleString('en-US', {
-            hour: 'numeric',
-            minute: '2-digit',
-            hour12: true
-        });
-
-        const timeStamp = `${month} ${day}, ${time}`;
-
-        console.log()
-
     }
 
     // ------------------------- HANDLE FUNCTIONS --------------------------------------------------  
@@ -183,10 +170,12 @@ export const MainContent = () => {
             trackerTemp = [createData(isCorrect, character[0], character[1]), ...trackerTableRows];
         }
 
+        const currentStreakCount = isCorrect ? streakCount + 1 : 0;
+        setMaxStreakCount(Math.max(maxStreakCount, currentStreakCount))
+        setStreakCount(currentStreakCount);
+
         // ---------------- GAME ENDED ----------------
         if (trackerTemp.length == hirakanaArray.length) {
-            const totalTime = formatTime(stopwatchElapsedTimeRef.current);
-            console.log(totalTime)
             setTrackerTableRows(trackerTemp);
             gameEndSetup();
             return;
@@ -223,8 +212,6 @@ export const MainContent = () => {
 
     const closeRestartYesNoModal = () => {
         setRestartModalOpen(false);
-        const totalTime = formatTime(stopwatchElapsedTimeRef.current);
-        console.log(totalTime)
     }
 
     const handleRestartOnYesClick = () => {
@@ -257,6 +244,7 @@ export const MainContent = () => {
                         isStopwatchRunning={isStopwatchRunning}
                         setIsStopwatchRunning={setIsStopwatchRunning}
                         restartToggled={restartToggled}
+                        isGameEnded={isGameEnded}
 
                         // CENTER
                         hirakanaArray={hirakanaArray}
