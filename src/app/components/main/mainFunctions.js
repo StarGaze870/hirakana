@@ -42,9 +42,8 @@ export const formatTime = (ms) => {
     return `${minutes}:${seconds}:${hundredths}`;
 };
 
-export const getUserData = () => {
+export const getUsersData = () => {
     const data = JSON.parse(localStorage.getItem('hirakana') || '{}');
-
     if (!data.hirakana) {
         return [];
     }
@@ -52,68 +51,76 @@ export const getUserData = () => {
     if (!data.hirakana['users']) {
         return [];
     }
-
     return data.hirakana['users'].map((e) => ({ ...e, username: decryptName(e.username), }));
 }
 
 export const insertNewUserName = (name) => {
 
     name = encryptName(name);
-    const data = getRawData();
-    let users = data.hirakana['users'];
+    let data = getRawData();
+    let users = data.hirakana['users'] || [];
 
-    initializeData(data.hirakana);
-    initializeUsers(users);
-    insertUser(users, name);
-    checkUsersLimit(users);
-    setSelectedUser(data, name);
+    users = insertUser(users, name);
+    users = checkUsersLimit(users);
+    data = setCurrentUserHelper(data, name)
+    data.hirakana['users'] = users;
+
     storeData(data);
 };
 
 const getRawData = () => {
-    return JSON.parse(localStorage.getItem('hirakana') || '{}');
-}
+    try {
+        return JSON.parse(localStorage.getItem('hirakana')) || { hirakana: {} };
+    } catch {
+        return { hirakana: {} };
+    }
+};
 
 const storeData = (data) => {
     localStorage.setItem('hirakana', JSON.stringify(data));
-}
-
-const initializeData = (data) => {
-    if (!data.hirakana) {
-        data.hirakana = {};
-    }
-}
-
-const initializeUsers = (users) => {
-    if (!users) {
-        users = [];
-    }
 }
 
 const checkUsersLimit = (users) => {
     if (users.length > MAX_PLAYERS) {
         users = users.slice(0, MAX_PLAYERS);
     }
+    return users;
 }
 
 const insertUser = (users, name) => {
     if (!users.some(u => u.username === name)) {
         users.unshift({ username: name, streak: [], lap: [] });
     }
+    return users;
 }
 
-const setSelectedUser = (data, name) => {
-    data.hirakana['selected'] = name;
+const setCurrentUserHelper = (data, name) => {
+    data.hirakana['selectedUser'] = name;
+    return data;
 }
 
-export const encryptName = (name) => {
-    return name.trim().replace(/ /g, '_');
+export const setCurrentUserSelected = (name) => {
+    name = encryptName(name);
+    let data = getRawData();
+    data = setCurrentUserHelper(data, name)
+
+    storeData(data);
+};
+
+export const getCurrentUser = () => {
+    const data = getRawData();
+    return decryptName(data.hirakana.selectedUser) || null;
 }
 
-export const decryptName = (name) => {
-    return name.replace(/_/g, ' ');
+const encryptName = (name) => {
+    return name?.trim().replace(/ /g, '_');
 }
 
+const decryptName = (name) => {
+    return name?.replace(/_/g, ' ');
+}
+
+// --------------- LIBRARY MODAL ----------------
 
 const syllables = ['a', 'e', 'i', 'o', 'u', '_']
 

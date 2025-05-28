@@ -11,7 +11,7 @@ import TableRow from '@mui/material/TableRow';
 import Stopwatch from "./stopwatch-left";
 import AddnewPlayerModal from "../modal/AddNewPlayerModal";
 import { useEffect, useState } from "react";
-import { getUserData, insertNewUserName } from "./mainFunctions";
+import { getCurrentUser, getUsersData, insertNewUserName, setCurrentUserSelected } from "./mainFunctions";
 import { ADD_NEW_PLAYER } from "@/app/constants";
 
 const columns = [
@@ -20,13 +20,6 @@ const columns = [
 ];
 
 const rows = [
-    { streak: 6, date: 'May 10, 8:55 PM' },
-    { streak: 6, date: 'May 10, 8:55 PM' },
-    { streak: 6, date: 'May 10, 8:55 PM' },
-    { streak: 6, date: 'May 10, 8:55 PM' },
-    { streak: 6, date: 'May 10, 8:55 PM' },
-    { streak: 6, date: 'May 10, 8:55 PM' },
-    { streak: 6, date: 'May 10, 8:55 PM' },
     { streak: 6, date: 'May 10, 8:55 PM' },
 ]
 
@@ -39,18 +32,31 @@ export const MainSidebarLeft = ({
 }) => {
 
     const [userNames, setUserNames] = useState([]);
-    const [isAddPlayerModalOpen, setIsAddPlayerModalOpen] = useState(null);
+    const [isAddPlayerModalOpen, setIsAddPlayerModalOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
 
     useEffect(() => {
         setupUserData();
     }, [])
 
+    useEffect(() => {
+        if (selectedUser) {
+            setCurrentUserSelected(selectedUser.username);
+        }
+    }, [selectedUser])
+
     function setupUserData() {
-        let userData = getUserData();
+        let userData = getUsersData();
         userData = [{ username: ADD_NEW_PLAYER }, ...userData]
         const filtered = userData.map((e) => ({ username: e.username }));
-        setSelectedUser(filtered.length > 1 ? filtered[1] : filtered[0]);
+
+        const savedUser = getCurrentUser()
+            ? { username: getCurrentUser() }
+            : filtered.length > 1
+                ? filtered[1]
+                : filtered[0]
+
+        setSelectedUser(savedUser);
         setUserNames(filtered);
     }
 
@@ -59,9 +65,10 @@ export const MainSidebarLeft = ({
         getOptionLabel: (option) => option.username,
     };
 
-    const profileOnChange = (event, newValue) => {
+    const playerOnChange = (event, newValue) => {
         if (newValue.username === ADD_NEW_PLAYER) {
             openAddNewPlayerModal();
+            return;
         }
         setSelectedUser(newValue);
     }
@@ -83,8 +90,6 @@ export const MainSidebarLeft = ({
     }
 
     const closeAddNewPlayerModal = () => {
-        console.log(getUserData()) // TODO: REMOVE
-        console.log(selectedUser.username)
         setIsAddPlayerModalOpen(false);
     }
 
@@ -105,7 +110,7 @@ export const MainSidebarLeft = ({
                     <div className="col d-flex flex-fill pt-4">
                         <Autocomplete
                             value={userNames.length > 1 ? selectedUser : { username: ADD_NEW_PLAYER }}
-                            onChange={profileOnChange}
+                            onChange={playerOnChange}
                             fullWidth
                             {...defaultProps}
                             id="disable-clearable"
@@ -154,17 +159,15 @@ export const MainSidebarLeft = ({
                             </TableHead>
                             <TableBody>
                                 {rows.map((row) => {
-                                    return (
-                                        <TableRow hover role="checkbox" tabIndex={-1} key={row.japanese}>
-                                            {columns.map((column) => {
-                                                return (
-                                                    <TableCell key={column.id} align='left' sx={{ maxWidth: '10px' }}>
-                                                        {row[column.id]}
-                                                    </TableCell>
-                                                );
-                                            })}
-                                        </TableRow>
-                                    );
+                                    <TableRow hover key={row.streak} role="checkbox" tabIndex={-1}>
+                                        <TableCell align='left' sx={{ maxWidth: '10px' }}>
+                                            {row.streak}
+                                        </TableCell>
+                                        <TableCell align='left' sx={{ maxWidth: '10px' }}>
+                                            {row.date}
+                                        </TableCell>
+                                    </TableRow>
+
                                 })}
                             </TableBody>
                         </Table>
@@ -225,14 +228,3 @@ function stringAvatar(name) {
         children: name.toUpperCase(),
     };
 }
-
-const players = [
-    { name: ADD_NEW_PLAYER },
-    { name: 'Alyssa Jumapao' },
-    { name: 'Lj Vincent Tudtud' },
-    { name: 'Raph Bacordio' },
-    { name: 'Aleck Sumalinog' },
-    { name: 'Victor Cudillo' },
-    { name: 'Kj Luab' },
-    { name: 'Jelord Butal' },
-];

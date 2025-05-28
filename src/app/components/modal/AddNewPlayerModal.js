@@ -55,7 +55,7 @@ export default function AddnewPlayerModal({
                 {/* TODO: WRAP WITH FORM */}
                 <Box sx={style}>
                     <Typography id="transition-modal-title" variant="h5" component="h2" className='ps-1 pb-3'>
-                        Add New Player
+                        New Player
                     </Typography>
                     <TextField id="outlined-basic" label="Name" variant="outlined" fullWidth inputRef={inputRef}/>
                     <div className='d-flex flex-fill justify-content-between pt-4'>

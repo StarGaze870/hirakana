@@ -89,8 +89,8 @@ export default function Stopwatch({
     return (
         <Button onClick={handleToggle} disabled={disableButton}>
             <Tooltip title="Pause / Resume" placement="auto">
-                <div className="d-flex justify-content-center align-items-center flex-row py-5 gap-3">
-                    <h1 className="m-0 text-black opacity-50" style={{ fontSize: '3.5rem', fontFamily: 'monospace' }}>
+                <div className="d-flex flex-fill justify-content-center align-items-center flex-row py-5">
+                    <h1 className="m-0 text-black opacity-50 pe-2" style={{ fontSize: '3.5rem', fontFamily: 'monospace' }}>
                         {formatTime(displayTime)}
                     </h1>
                     {isRunning ? (

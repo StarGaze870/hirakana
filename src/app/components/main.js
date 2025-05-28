@@ -31,20 +31,17 @@ export const MainContent = () => {
     const [isHintClicked, setIsHintClicked] = useState(false);
     const [difficulty, setDifficulty] = useState(0);
     const [isDifficultyDisabled, setIsDifficultyDisabled] = useState(false);
+    const [isGameEnded, setIsGameEnded] = useState(false);
 
     // SIDEBAR RIGHT
     const [isRestartModalOpen, setRestartModalOpen] = useState(false);
-
-    useEffect(() => {
-        generateUniqueCharacter();
-    }, [])
 
     // PAUSE STOPWATCH WHEN PAGE IS HIDDEN
     useEffect(() => {
         const handleVisibilityChange = () => {
             if (document.hidden) {
                 setIsStopwatchRunning(false);
-            } else if (trackerCounter.size > 1 || isGameStartedRef.current) {
+            } else if (isGameStartedRef.current && !isGameEnded) {
                 setIsStopwatchRunning(true);
             }
         };
@@ -55,6 +52,19 @@ export const MainContent = () => {
         };
     }, []);
 
+    useEffect(() => {
+
+        if (!isStopwatchRunning && isGameEnded) {
+            saveLapTime();
+        }
+
+    }, [isStopwatchRunning])
+
+    useEffect(() => {
+        if (trackerCounter.size === 0) {
+            generateUniqueCharacter();
+        }
+    }, [trackerCounter]);
 
     // ------------------------------ FUNCTIONS --------------------------------------------------  
 
@@ -74,6 +84,10 @@ export const MainContent = () => {
     function generateUniqueCharacter() {
         let randomCharacterNum;
 
+        if (trackerCounter.size == hirakanaArray.length) {
+            return
+        }
+
         do {
             randomCharacterNum = generateCharacter();
         } while (trackerCounter.has(randomCharacterNum));
@@ -92,44 +106,62 @@ export const MainContent = () => {
         setIsDifficultyDisabled(false);
         setTrackerCounter(new Set());
         setIsStopwatchRunning(false);
-        generateUniqueCharacter();
         setIsRestartToggled(true);
         setIsHintClicked(false);
+        setIsGameEnded(false);
         setInputValue('')
 
-        setTrackerTableRows([{}])
+        setTrackerTableRows([])
+    }
+
+    function gameEndSetup() {
+        isGameStartedRef.current = false;
+        displayInputBorderFadeOutTimer();
+        setIsStopwatchRunning(false);
+        setIsGameEnded(true);
+    }
+
+    function saveLapTime() {
+
+        const totalTime = formatTime(stopwatchElapsedTimeRef.current);
+        const date = new Date();
+
+        const month = date.toLocaleString('en-US', { month: 'short' });
+        const day = date.getDate();
+        const time = date.toLocaleString('en-US', {
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true
+        });
+
+        const timeStamp = `${month} ${day}, ${time}`;
+
+        console.log()
+
     }
 
     // ------------------------- HANDLE FUNCTIONS --------------------------------------------------  
 
     // CENTER
     const handleInputChange = (e) => {
-
-        if (trackerCounter.size == hirakanaArray.length) {
-            return
-        }
         setInputValue(e.target.value);
     }
 
     const handleOnEnter = () => {
 
         const value = inputValue.trim();
-        if (value.length == 0) {
+        if (value.length == 0 || isGameEnded) {
             return;
         }
 
-        if (trackerCounter.size == hirakanaArray.length) {
-            // TODO: SAVE LAP TIME
-            return
-        }
-
         const character = hirakanaArray[selectedCharacter];
+        var trackerTemp = trackerTableRows;
         let isCorrect = false;
 
         if (difficulty == DIFFICULTY_EASY) {
 
             if (value && value.toLowerCase() === character[1].toLowerCase()) {
-                setTrackerTableRows([createData(true, character[0], character[1]), ...trackerTableRows])
+                trackerTemp = [createData(true, character[0], character[1]), ...trackerTableRows];
                 generateUniqueCharacter();
                 setIsHintClicked(false);
                 setInputValue('')
@@ -148,15 +180,25 @@ export const MainContent = () => {
             generateUniqueCharacter();
             setIsHintClicked(false);
 
-            setTrackerTableRows([createData(isCorrect, character[0], character[1]), ...trackerTableRows])
+            trackerTemp = [createData(isCorrect, character[0], character[1]), ...trackerTableRows];
         }
 
+        // ---------------- GAME ENDED ----------------
+        if (trackerTemp.length == hirakanaArray.length) {
+            const totalTime = formatTime(stopwatchElapsedTimeRef.current);
+            console.log(totalTime)
+            setTrackerTableRows(trackerTemp);
+            gameEndSetup();
+            return;
+        }
+
+        setTrackerTableRows(trackerTemp);
+        displayInputBorderFadeOutTimer();
         isGameStartedRef.current = true;
+        setIsCorrect(() => isCorrect);
+        setIsDifficultyDisabled(true);
         setIsStopwatchRunning(true);
         setIsRestartToggled(false);
-        setIsDifficultyDisabled(true);
-        displayInputBorderFadeOutTimer();
-        setIsCorrect(() => isCorrect);
     }
 
     const handleOnHintClick = () => {
@@ -181,6 +223,8 @@ export const MainContent = () => {
 
     const closeRestartYesNoModal = () => {
         setRestartModalOpen(false);
+        const totalTime = formatTime(stopwatchElapsedTimeRef.current);
+        console.log(totalTime)
     }
 
     const handleRestartOnYesClick = () => {
@@ -190,10 +234,6 @@ export const MainContent = () => {
         restartTab_1();
         closeRestartYesNoModal();
     }
-
-    // TODO: SAVE
-    // ACTUAL TIME STAMP WHEN PAUSED
-    // console.log(formatTime(stopwatchElapsedTimeRef.current))
 
     return (
         <div className="d-flex app-bar-margin flex-grow-1">
