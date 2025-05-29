@@ -1,7 +1,7 @@
 import ReplayIcon from '@mui/icons-material/Replay';
 import { IconButton, Tooltip } from '@mui/material';
 import { HirakanaBasicRightSide } from '../../Tabs/Hirakana-Basic-Right';
-import YesNoModal from '../../modal/YesNoModal';
+import YesNoModal from '../../modal/rename';
 
 export const MainSidebarRight = ({
     rows = [],
