@@ -55,3 +55,13 @@
     border-right: 2px solid #c5c5c5;
   }
 }
+
+/* ---------------------------- SCROLL SNAP ----------------------------------- */
+
+.sidebar-left-library-modal-content {
+    scroll-snap-type: y mandatory;
+}
+
+.sidebar-left-library-modal-snap-item {
+  scroll-snap-align: start;
+}

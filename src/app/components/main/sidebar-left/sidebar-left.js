@@ -1,21 +1,13 @@
-import { Autocomplete, Avatar, IconButton, Tooltip } from "@mui/material";
+import { Autocomplete, Avatar } from "@mui/material";
 import TextField from '@mui/material/TextField';
-import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
-
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import Stopwatch from "./stopwatch-left";
-import AddnewPlayerModal from "../modal/AddNewPlayerModal";
-import { useEffect, useState } from "react";
-import { DateNow_MMDDmmms, formatTime, getCurrentUser, getStreakAndLap, getUsersData, insertNewUserName, setCurrentUserSelected } from "./mainFunctions";
+import AddnewPlayerModal from "../../modal/AddNewPlayerModal";
+import { useEffect, useMemo, useState } from "react";
+import { DateNow_MMDDmmms, formatTime, getComparator, getCurrentUser, getStreakAndLap, getUsersData, insertNewUserName, setCurrentUserSelected } from "../mainFunctions";
 import { SIDE_BAR_LEFT_LAP_TABLE as LAP_TABLE, SIDE_BAR_LEFT_LAP_HEADERS, SIDE_BAR_LEFT_STREAK_HEADERS } from "@/app/constants";
 import { SIDE_BAR_LEFT_STREAK_TABLE as STREAK_TABLE } from "@/app/constants";
 import { ADD_NEW_PLAYER } from "@/app/constants";
-
+import { HistoryTable } from "./historyTable";
 export const MainSidebarLeft = ({
     stopwatchStartTimeRef,
     stopwatchElapsedTimeRef,
@@ -177,48 +169,11 @@ export const MainSidebarLeft = ({
             />
 
             {/* STREAK TABLE */}
-            <div className="d-flex flex-fill flex-column">
-                <div className="ps-2">
-                    <Tooltip className="p-0" title='Library' placement='auto'>
-                        <IconButton onClick={handleOnSwitchTables}>
-                            <SwapHorizIcon />
-                        </IconButton>
-                    </Tooltip>
-                </div>
-                <div className={`d-flex flex-column flex-lg-grow-1`} style={{ height: 300 }}>
-                    <TableContainer>
-                        <Table stickyHeader aria-label="sticky table">
-                            <TableHead>
-                                <TableRow>
-                                    {tableHeaders.map((column) => (
-                                        <TableCell
-                                            key={column.id}
-                                            align={column.align}
-                                            className={column.opacity}
-                                            style={{ minWidth: column.minWidth, maxWidth: column.minWidth, backgroundColor: '', textAlign: '', color: 'black', fontWeight: column.fw }}
-                                        >
-                                            {column.label}
-                                        </TableCell>
-                                    ))}
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {tableData.map((row, index) => {
-                                    return (
-                                        <TableRow hover key={index} role="checkbox" tabIndex={-1}>
-                                            <TableCell align='left' sx={{ maxWidth: '10px' }}>
-                                                {row.streak ?? row.lap}
-                                            </TableCell>
-                                            <TableCell align='left' sx={{ maxWidth: '10px' }}>
-                                                {row.date}
-                                            </TableCell>
-                                        </TableRow>)
-                                })}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </div>
-            </div>
+            <HistoryTable
+                tableHeaders={tableHeaders}
+                tableData={tableData}
+                handleOnSwitchTables={handleOnSwitchTables}
+            />
 
         </div >
     );

@@ -28,6 +28,7 @@ export const MainContent = () => {
     const [inputValue, setInputValue] = useState('');
     const [isCorrect, setIsCorrect] = useState(null);
     const [displayInputBorder, setValueDisplayInputBorder] = useState(false);
+    const borderTimeoutRef = useRef(null);
     const [isHintClicked, setIsHintClicked] = useState(false);
     const [difficulty, setDifficulty] = useState(0);
     const [isDifficultyDisabled, setIsDifficultyDisabled] = useState(false);
@@ -74,14 +75,18 @@ export const MainContent = () => {
 
     function displayInputBorderFadeOutTimer() {
         setValueDisplayInputBorder(true);
-        const timeout = setTimeout(() => {
-            setValueDisplayInputBorder(false);
-        }, 1500);
 
-        return () => clearTimeout(timeout);
+        if (borderTimeoutRef.current) {
+            clearTimeout(borderTimeoutRef.current);
+        }
+
+        borderTimeoutRef.current = setTimeout(() => {
+            setValueDisplayInputBorder(false);
+            borderTimeoutRef.current = null;
+        }, 1500);
     }
 
-    function generateCharacter() {
+    function generateRandomIndex() {
         return Math.floor(Math.random() * hirakanaArray.length);
     }
 
@@ -93,10 +98,10 @@ export const MainContent = () => {
         }
 
         do {
-            randomCharacterNum = generateCharacter();
+            randomCharacterNum = generateRandomIndex();
         } while (trackerCounter.has(randomCharacterNum));
 
-        setSelectedCharacter(randomCharacterNum);
+        setSelectedCharacter(() => randomCharacterNum);
         setTrackerCounter(prev => prev.add(randomCharacterNum));
     }
 
@@ -131,8 +136,15 @@ export const MainContent = () => {
 
     // CENTER
     const handleInputChange = (e) => {
-        setInputValue(e.target.value);
-    }
+        const value = e.target.value;
+
+        if (!/^[a-zA-Z]*$/.test(value)) {
+            return;
+        }
+
+        setInputValue(value);
+    };
+
 
     const handleOnEnter = () => {
 
@@ -193,6 +205,8 @@ export const MainContent = () => {
     const handleOnHintClick = () => {
         if (isHintClicked) return;
 
+        console.log(hirakanaArray)
+        console.log(selectedCharacter)
         const romaji = hirakanaArray[selectedCharacter][1];
         const firstLetter = romaji[0];
 

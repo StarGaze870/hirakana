@@ -61,12 +61,12 @@ export default function LibraryModal({
                     <IconButton onClick={handleNoOnClick} className='position-absolute end-0 top-0 opacity-50'>
                         <CloseIcon color='error' className='fs-5'/>
                     </IconButton>
-                    <div className='d-flex w-100 justify-content-between flex-column flex-xl-row overflow-y-auto' style={{ height: '80vh' }}>
-                        <div className='d-flex flex-column align-items-center pe-xl-4 pb-5 pb-xl-0'>
+                    <div className='d-flex w-100 justify-content-between flex-column flex-xl-row overflow-y-auto sidebar-left-library-modal-content' style={{ height: '80vh' }}>
+                        <div className='d-flex flex-column align-items-center pe-xl-4 pb-5 pb-xl-0 sidebar-left-library-modal-snap-item'>
                             <h2 className='pb-3'>Hiragana</h2>
                             <LibraryTable rows={hiraganaData} />
                         </div>
-                        <div className='d-flex flex-column align-items-center ps-xl-4 pt-5 pt-xl-0'>
+                        <div className='d-flex flex-column align-items-center ps-xl-4 sidebar-left-library-modal-snap-item'>
                             <h2 className='pb-3'>Katakana</h2>
                             <LibraryTable rows={katakanaData} />
                         </div>

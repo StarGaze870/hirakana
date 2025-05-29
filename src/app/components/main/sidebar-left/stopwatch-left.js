@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from 'react';
 import { Button, Tooltip } from '@mui/material';
 import PauseIcon from '@mui/icons-material/Pause';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import { formatTime } from './mainFunctions';
+import { formatTime } from '../mainFunctions';
 
 export default function Stopwatch({
 
