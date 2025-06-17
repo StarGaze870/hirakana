@@ -12,6 +12,8 @@ export default function Stopwatch({
     reset = false,
     setIsRunning = () => { console.error('setIsRunning is empty') },
     isGameEnded = false,
+    paddingY = "py-5",
+    justify = "justify-content-center",
 
 }) {
 
@@ -94,7 +96,7 @@ export default function Stopwatch({
     return (
         <Button onClick={handleToggle} disabled={disableButton || isGameEnded}>
             <Tooltip title="Pause / Resume" placement="auto">
-                <div className="d-flex flex-fill justify-content-center align-items-center flex-row py-5">
+                <div className={`d-flex flex-fill align-items-center flex-row ${paddingY} ${justify}`}>
                     <h1 className="m-0 text-black opacity-50 pe-2" style={{ fontSize: '3.5rem', fontFamily: 'monospace' }}>
                         {formatTime(displayTime)}
                     </h1>

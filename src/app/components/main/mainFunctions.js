@@ -1,6 +1,8 @@
 // ------------------------------------ STOPWATCH ------------------------------------
 
 import { MAX_LAP_LOG, MAX_PLAYERS, MAX_STREAK_LOG } from "@/app/constants";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import DangerousIcon from '@mui/icons-material/Dangerous';
 
 // username's space will be replaced as '_'
 // streak = array
@@ -292,4 +294,61 @@ export const getComparator = (order, orderBy) => {
     return order === 'desc'
         ? (a, b) => descendingComparator(a, b, orderBy)
         : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+// ------------------ AVATAR STRING FUNCTIONS --------------------------
+
+export const stringAvatar = (name) => {
+
+    const nameArray = name.trim().split(/\s+/);
+    const arrayLength = nameArray.length;
+
+    if (arrayLength > 1) {
+        name = `${nameArray[0][0]}${nameArray[1][0]}`;
+    } else if (arrayLength === 1 && nameArray[0].length > 1) {
+        name = `${nameArray[0][0]}${nameArray[0][1]}`;
+    } else if (arrayLength === 1 && nameArray[0].length === 1) {
+        name = `${nameArray[0][0]}`;
+    }
+
+    return {
+        sx: {
+            bgcolor: stringToColor(name),
+        },
+        children: name.toUpperCase(),
+    };
+}
+
+function stringToColor(string) {
+    let hash = 0;
+
+    for (let i = 0; i < string.length; i++) {
+        hash = string.charCodeAt(i) + ((hash << 5) - hash);
+    }
+
+    let color = '#';
+
+    for (let i = 0; i < 3; i++) {
+        let value = (hash >> (i * 8)) & 0xff;
+
+        // Bias: boost red, lighten green and blue
+        if (i === 0) {
+            // Red component
+            value = Math.min(255, Math.floor(value * 0.7 + 100)); // 100–255
+        } else {
+            // Green & Blue component
+            value = Math.min(255, Math.floor(value * 0.4 + 120)); // 120–223
+        }
+
+        color += `00${value.toString(16)}`.slice(-2);
+    }
+
+    return color;
+}
+
+// ------------------ SIDEBAR RIGHT --------------------------
+
+export const CREATE_HISTORY_TABLE_DATA = (isCorrect, japanese, romaji) => {
+    const icon = isCorrect ? <CheckCircleIcon color='success' /> : <DangerousIcon color='error' />;
+    return { isCorrect: icon, japanese, romaji };
 }

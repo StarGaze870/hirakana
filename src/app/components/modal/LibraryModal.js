@@ -6,8 +6,8 @@ import LibraryTable from './LibraryModalTableContent';
 import CloseIcon from '@mui/icons-material/Close';
 import { useEffect, useState } from 'react';
 import { CreateRowsForTableForm } from '../main/mainFunctions';
-import { Hiragana } from '@/app/texts/Hiragana';
-import { Katakana } from '@/app/texts/Katakana';
+import { Hiragana } from '../../../../public/texts/Hiragana';
+import { Katakana } from '../../../../public/texts/Katakana';
 import { IconButton } from '@mui/material';
 
 const style = {

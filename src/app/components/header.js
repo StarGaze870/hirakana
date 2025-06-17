@@ -13,14 +13,24 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
+import { useRouter } from 'next/navigation';
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = [
+    { label: 'Home', link: '/' },
+    { label: 'Tutorial', link: '/tutorial' },
+    { label: 'Leaderboards', link: '/leaderboards' },
+    { label: 'About', link: '/about' },
+];
+
+const settings = [
+    { label: 'Support', link: '/support' },
+];
 
 function Header() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+    const router = useRouter();
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -29,37 +39,51 @@ function Header() {
         setAnchorElUser(event.currentTarget);
     };
 
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
+    const handleCloseNavMenu = (e) => {
+        proceedToLink(e);
     };
 
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
+    const handleCloseUserMenu = (e) => {
+        proceedToLink(e);
     };
+
+    const proceedToLink = (link) => {
+        if (link[0] == '/') {
+            router.push(link)
+        }
+        setAnchorElNav(null);
+        setAnchorElUser(null);
+    }
 
     return (
         <AppBar position="fixed" color='error'>
             <Container maxWidth="xxl">
                 <Toolbar disableGutters>
-                    <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                    <Box className='pb-2 pe-2' component="a" href='/' sx={{ display: { xs: 'none', md: 'flex', mr: 1 } }}>
+                        <img
+                            src="nyan.png"
+                            alt="Ad Banner"
+                            className="img-fluid object-fit-cover"
+                            style={{ width: '35px' }}
+                        />
+                    </Box>
                     <Typography
-                        variant="h6"
+                        variant="h5"
                         noWrap
                         component="a"
-                        href="#app-bar-with-responsive-menu"
+                        href="/"
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
                             fontFamily: 'monospace',
                             fontWeight: 700,
-                            letterSpacing: '.3rem',
+                            letterSpacing: '.25rem',
                             color: 'inherit',
                             textDecoration: 'none',
                         }}
                     >
-                        LOGO
+                        NEKO
                     </Typography>
-
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
@@ -88,18 +112,25 @@ function Header() {
                             sx={{ display: { xs: 'block', md: 'none' } }}
                         >
                             {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
+                                <MenuItem key={page.link} onClick={() => handleCloseNavMenu(page.link)}>
+                                    <Typography sx={{ textAlign: 'center' }}>{page.label}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
                     </Box>
-                    <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+                    <Box className='pb-2 pe-2' component="a" href='/' sx={{ display: { xs: 'flex', md: 'none', mr: 1 } }}>
+                        <img
+                            src="nyan.png"
+                            alt="Ad Banner"
+                            className="img-fluid object-fit-cover"
+                            style={{ width: '35px' }}
+                        />
+                    </Box>
                     <Typography
                         variant="h5"
                         noWrap
                         component="a"
-                        href="#app-bar-with-responsive-menu"
+                        href="/"
                         sx={{
                             mr: 2,
                             display: { xs: 'flex', md: 'none' },
@@ -111,16 +142,16 @@ function Header() {
                             textDecoration: 'none',
                         }}
                     >
-                        LOGO
+                        NEKO
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
                             <Button
-                                key={page}
-                                onClick={handleCloseNavMenu}
+                                key={page.link}
+                                onClick={() => handleCloseNavMenu(page.link)}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                             >
-                                {page}
+                                {page.label}
                             </Button>
                         ))}
                     </Box>
@@ -129,6 +160,7 @@ function Header() {
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                 <Avatar
                                     alt="Remy Sharp"
+                                    src='nyan-profile.png'
                                 />
                             </IconButton>
                         </Tooltip>
@@ -149,8 +181,8 @@ function Header() {
                             onClose={handleCloseUserMenu}
                         >
                             {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
+                                <MenuItem key={setting.link} onClick={() => handleCloseUserMenu(setting.link)}>
+                                    <Typography sx={{ textAlign: 'center' }}>{setting.label}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>

@@ -2,12 +2,13 @@ import { Autocomplete, Avatar } from "@mui/material";
 import TextField from '@mui/material/TextField';
 import Stopwatch from "./stopwatch-left";
 import AddnewPlayerModal from "../../modal/AddNewPlayerModal";
-import { useEffect, useMemo, useState } from "react";
-import { DateNow_MMDDmmms, formatTime, getComparator, getCurrentUser, getStreakAndLap, getUsersData, insertNewUserName, setCurrentUserSelected } from "../mainFunctions";
+import { useEffect, useState } from "react";
+import { DateNow_MMDDmmms, formatTime, getCurrentUser, getStreakAndLap, getUsersData, insertNewUserName, setCurrentUserSelected, stringAvatar } from "../mainFunctions";
 import { SIDE_BAR_LEFT_LAP_TABLE as LAP_TABLE, SIDE_BAR_LEFT_LAP_HEADERS, SIDE_BAR_LEFT_STREAK_HEADERS } from "@/app/constants";
 import { SIDE_BAR_LEFT_STREAK_TABLE as STREAK_TABLE } from "@/app/constants";
 import { ADD_NEW_PLAYER } from "@/app/constants";
 import { HistoryTable } from "./historyTable";
+
 export const MainSidebarLeft = ({
     stopwatchStartTimeRef,
     stopwatchElapsedTimeRef,
@@ -51,6 +52,9 @@ export const MainSidebarLeft = ({
         setUserTableData(streak, lap, true);
         setStreakData(streak);
         setLapData(lap);
+
+        console.log(streak)
+        console.log(lap)
     }
 
     function setUserTableData(rawStreak = [], rawLap = [], useLocal = false) {
@@ -177,54 +181,4 @@ export const MainSidebarLeft = ({
 
         </div >
     );
-}
-
-// ------------------ AVATAR COLOR GENERATOR ------------------
-
-function stringToColor(string) {
-    let hash = 0;
-
-    for (let i = 0; i < string.length; i++) {
-        hash = string.charCodeAt(i) + ((hash << 5) - hash);
-    }
-
-    let color = '#';
-
-    for (let i = 0; i < 3; i++) {
-        let value = (hash >> (i * 8)) & 0xff;
-
-        // Bias: boost red, lighten green and blue
-        if (i === 0) {
-            // Red component
-            value = Math.min(255, Math.floor(value * 0.7 + 100)); // 100–255
-        } else {
-            // Green & Blue component
-            value = Math.min(255, Math.floor(value * 0.4 + 120)); // 120–223
-        }
-
-        color += `00${value.toString(16)}`.slice(-2);
-    }
-
-    return color;
-}
-
-function stringAvatar(name) {
-
-    const nameArray = name.trim().split(/\s+/);
-    const arrayLength = nameArray.length;
-
-    if (arrayLength > 1) {
-        name = `${nameArray[0][0]}${nameArray[1][0]}`;
-    } else if (arrayLength === 1 && nameArray[0].length > 1) {
-        name = `${nameArray[0][0]}${nameArray[0][1]}`;
-    } else if (arrayLength === 1 && nameArray[0].length === 1) {
-        name = `${nameArray[0][0]}`;
-    }
-
-    return {
-        sx: {
-            bgcolor: stringToColor(name),
-        },
-        children: name.toUpperCase(),
-    };
 }

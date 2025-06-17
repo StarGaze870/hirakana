@@ -115,7 +115,7 @@ export const CenterContent = ({
                     <MenuItem value={2}>Hard</MenuItem>
                 </Select>
             </div>
-            {/* SCORE */}
+            {/* COUNT */}
             <div className='col flex-fill d-flex pt-4 justify-content-center'>
                 <p className="m-0 opacity-25 fs-5 pt-xl-2">
                     {tracker.size < 1 ? 1 : tracker.size} / {hirakanaArray.length}
@@ -150,7 +150,6 @@ export const CenterContent = ({
                         </span>
                     </Tooltip>
                     <input
-                        onClick={() => console.log('boxclicl')}
                         ref={inputRef}
                         className='w-100'
                         type="text"
@@ -172,6 +171,7 @@ export const CenterContent = ({
                     />
                 </form>
             </div>
+
         </div>
     );
 }

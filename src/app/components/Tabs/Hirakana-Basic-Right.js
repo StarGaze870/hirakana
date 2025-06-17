@@ -11,10 +11,14 @@ const columns = [
     { id: 'romaji', label: 'Romaji', minWidth: 10 },
 ];
 
-export const HirakanaBasicRightSide = ({ rows = [] }) => {
+export const HirakanaBasicRightSide = ({
+    rows = [],
+    overflowY = "",
+    minHeight = "",
+}) => {
 
     return (
-        <TableContainer>
+        <TableContainer className={`${overflowY}`} style={{ minHeight: minHeight }}>
             <Table stickyHeader aria-label="sticky table">
                 <TableHead>
                     <TableRow>

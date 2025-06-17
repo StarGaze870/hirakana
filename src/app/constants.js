@@ -1,3 +1,6 @@
+import { Hiragana } from "../../public/texts/Hiragana";
+import { Katakana } from "../../public/texts/Katakana";
+
 export const MAX_PLAYERS = 100;
 export const MAX_HISTORY_LOG = 10_000;
 export const MAX_STREAK_LOG = 10_000;
@@ -11,6 +14,8 @@ export const DIFFICULTY_HARD = 2;
 
 export const SIDE_BAR_LEFT_LAP_TABLE = true;
 export const SIDE_BAR_LEFT_STREAK_TABLE = false;
+
+export const HIRAKANA_ARRAY = Hiragana.concat(Katakana);
 
 export const SIDE_BAR_LEFT_STREAK_HEADERS = [
     { id: 'streak', label: 'Best Streaks', minWidth: 5, fw: 'bold' },

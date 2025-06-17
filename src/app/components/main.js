@@ -1,14 +1,11 @@
 'use client'
 
-import 'bootstrap/dist/css/bootstrap.min.css'
 import { useEffect, useRef, useState } from 'react'
-import { Hiragana } from '../texts/Hiragana'
-import { Katakana } from '../texts/Katakana'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import DangerousIcon from '@mui/icons-material/Dangerous';
+import { Hiragana } from '../../../public/texts/Hiragana'
+import { Katakana } from '../../../public/texts/Katakana'
 import BasicTabs from './main/BasicTabs'
 import { DIFFICULTY_EASY, DIFFICULTY_HARD, DIFFICULTY_MEDIUM } from '../constants'
-import { saveStreakAndLap } from './main/mainFunctions'
+import { CREATE_HISTORY_TABLE_DATA, saveStreakAndLap } from './main/mainFunctions'
 
 const hirakanaArray = Hiragana.concat(Katakana);
 
@@ -105,11 +102,6 @@ export const MainContent = () => {
         setTrackerCounter(prev => prev.add(randomCharacterNum));
     }
 
-    function createData(isCorrect, japanese, romaji) {
-        const icon = isCorrect ? <CheckCircleIcon color='success' /> : <DangerousIcon color='error' />;
-        return { isCorrect: icon, japanese, romaji };
-    }
-
     function restartTab_1() {
         isGameStartedRef.current = false;
         setIsDifficultyDisabled(false);
@@ -160,7 +152,7 @@ export const MainContent = () => {
         if (difficulty == DIFFICULTY_EASY) {
 
             if (value && value.toLowerCase() === character[1].toLowerCase()) {
-                trackerTemp = [createData(true, character[0], character[1]), ...trackerTableRows];
+                trackerTemp = [CREATE_HISTORY_TABLE_DATA(true, character[0], character[1]), ...trackerTableRows];
                 generateUniqueCharacter();
                 setIsHintClicked(false);
                 setInputValue('')
@@ -179,7 +171,7 @@ export const MainContent = () => {
             generateUniqueCharacter();
             setIsHintClicked(false);
 
-            trackerTemp = [createData(isCorrect, character[0], character[1]), ...trackerTableRows];
+            trackerTemp = [CREATE_HISTORY_TABLE_DATA(isCorrect, character[0], character[1]), ...trackerTableRows];
         }
 
         const currentStreakCount = isCorrect ? streakCount + 1 : 0;
@@ -204,9 +196,6 @@ export const MainContent = () => {
 
     const handleOnHintClick = () => {
         if (isHintClicked) return;
-
-        console.log(hirakanaArray)
-        console.log(selectedCharacter)
         const romaji = hirakanaArray[selectedCharacter][1];
         const firstLetter = romaji[0];
 

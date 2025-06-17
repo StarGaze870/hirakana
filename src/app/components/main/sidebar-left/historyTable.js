@@ -13,22 +13,13 @@ import { getComparator } from "../mainFunctions";
 export const HistoryTable = ({
     tableHeaders = [],
     tableData = [],
+    height = 300,
     handleOnSwitchTables = () => console.error("handleOnSwitchTables is not set"),
 
 }) => {
 
-    const [isLoadBlankData, setIsLoadBlankData] = useState(false);
-
     const [orderBy, setOrderBy] = useState('date');
     const [order, setOrder] = useState('asc');
-
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            setIsLoadBlankData(tableData.length == 0);
-        }, 1200);
-
-        return () => clearTimeout(timeout);
-    }, [tableData]);
 
     const createSortHandler = (property) => (event) => {
         handleRequestSort(event, property);
@@ -48,71 +39,77 @@ export const HistoryTable = ({
 
     return (
         <div className="d-flex flex-fill flex-column">
-            <div className="ps-2">
-                <Tooltip className="p-0" title='Library' placement='auto'>
-                    <IconButton onClick={handleOnSwitchTables}>
-                        <SwapHorizIcon />
-                    </IconButton>
-                </Tooltip>
-            </div>
-            <div className={`d-flex flex-column flex-lg-grow-1`} style={{ height: 300 }}>
-                <TableContainer>
-                    <Table stickyHeader aria-label="sticky table" size="medium">
-                        <TableHead>
-                            <TableRow>
-                                {(isLoadBlankData || visibleRows.length != 0) ? tableHeaders.map((headCell) => (
-                                    <TableCell
-                                        key={headCell.id}
-                                        align={'left'}
-                                        padding={'none'}
-                                        sortDirection={orderBy === headCell.id ? order : false}
-                                        style={{ minWidth: headCell.minWidth, maxWidth: headCell.minWidth, backgroundColor: '', textAlign: '', color: 'black', fontWeight: headCell.fw }}
-                                        onClick={createSortHandler(headCell.id)}
-                                        sx={{ cursor: 'pointer' }}
-                                    >
-                                        <TableSortLabel
-                                            active={orderBy === headCell.id}
-                                            direction={orderBy === headCell.id ? order : 'asc'}
-                                        >
-                                            {headCell.label}
-                                            {orderBy === headCell.id ? (
-                                                <Box component="span" sx={visuallyHidden}>
-                                                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                                                </Box>
-                                            ) : null}
-                                        </TableSortLabel>
-                                    </TableCell>
-                                ))
-                                    : <TableCell>
-                                        <div className="d-flex flex-column gap-3">
-                                            <Skeleton variant="rectangular" height={40} />
-                                            <Skeleton variant="rectangular" height={200} />
-                                        </div>
-                                    </TableCell>
-                                }
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {visibleRows.map((row, index) => {
-                                return (
-                                    <TableRow
-                                        hover
-                                        tabIndex={-1}
-                                        key={index}
-                                        sx={{ userSelect: 'none' }}
-                                    >
-                                        <TableCell align='left' sx={{ maxWidth: '10px' }}>
-                                            {row.streak ?? row.lap}
-                                        </TableCell>
-                                        <TableCell align='left' sx={{ maxWidth: '10px' }}>
-                                            {row.date}
-                                        </TableCell>
-                                    </TableRow>)
-                            })}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </div>
+            {(visibleRows.length == 0) ?
+                <div className="d-flex flex-fill justify-content-center">
+                    <div className="d-flex" style={{ maxWidth: 300 }}>
+                        <img
+                            src="nyan.png"
+                            alt="Ad Banner"
+                            className="img-fluid object-fit-cover opacity-75"
+                        />
+                    </div>
+                </div>
+                : <>
+                    <div className="ps-2">
+                        <Tooltip className="p-0" title='Library' placement='auto'>
+                            <IconButton onClick={handleOnSwitchTables}>
+                                <SwapHorizIcon />
+                            </IconButton>
+                        </Tooltip>
+                    </div>
+                    <div className={`d-flex flex-column flex-lg-grow-1`} style={{ height: height }}>
+                        <TableContainer>
+                            <Table stickyHeader aria-label="sticky table" size="medium">
+                                <TableHead>
+                                    <TableRow>
+                                        {tableHeaders.map((headCell) => (
+                                            <TableCell
+                                                key={headCell.id}
+                                                align={'left'}
+                                                padding={'none'}
+                                                sortDirection={orderBy === headCell.id ? order : false}
+                                                style={{ minWidth: headCell.minWidth, maxWidth: headCell.minWidth, backgroundColor: '', textAlign: '', color: 'black', fontWeight: headCell.fw }}
+                                                onClick={createSortHandler(headCell.id)}
+                                                sx={{ cursor: 'pointer' }}
+                                            >
+                                                <TableSortLabel
+                                                    active={orderBy === headCell.id}
+                                                    direction={orderBy === headCell.id ? order : 'asc'}
+                                                >
+                                                    {headCell.label}
+                                                    {orderBy === headCell.id ? (
+                                                        <Box component="span" sx={visuallyHidden}>
+                                                            {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                                                        </Box>
+                                                    ) : null}
+                                                </TableSortLabel>
+                                            </TableCell>
+                                        ))}
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {visibleRows.map((row, index) => {
+                                        return (
+                                            <TableRow
+                                                hover
+                                                tabIndex={-1}
+                                                key={index}
+                                                sx={{ userSelect: 'none' }}
+                                            >
+                                                <TableCell align='left' sx={{ maxWidth: '10px' }}>
+                                                    {row.streak ?? row.lap}
+                                                </TableCell>
+                                                <TableCell align='left' sx={{ maxWidth: '10px' }}>
+                                                    {row.date}
+                                                </TableCell>
+                                            </TableRow>)
+                                    })}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </div>
+                </>
+            }
         </div>
     );
 }

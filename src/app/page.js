@@ -21,7 +21,7 @@ export default function Home() {
         {/* Open Graph / Social */}
         <meta property="og:title" content="Hirakana - Japanese Quiz" />
         <meta property="og:description" content="Practice Hiragana, Katakana, and Kanji online for free." />
-        <meta property="og:image" content="https://blog.sakura.co/wp-content/uploads/2022/10/sakuraco_momiji-thumbnail.png" />
+        <meta property="og:image" content="nyan.png" />
         <meta property="og:url" content="https://hirakana.net" />
         <meta property="og:type" content="website" />
 
@@ -29,13 +29,8 @@ export default function Home() {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Hirakana - Japanese Quiz" />
         <meta name="twitter:description" content="Master Kana & Kanji through fun quizzes." />
-        <meta name="twitter:image" content="https://blog.sakura.co/wp-content/uploads/2022/10/sakuraco_momiji-thumbnail.png" />
+        <meta name="twitter:image" content="nyan.png" />
       </Head>
-
-      {/* HEADER */}
-      <header>
-        <Header />
-      </header>
 
       {/* MAIN CONTENT */}
       <MainContent />
