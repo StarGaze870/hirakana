@@ -52,9 +52,6 @@ export const MainSidebarLeft = ({
         setUserTableData(streak, lap, true);
         setStreakData(streak);
         setLapData(lap);
-
-        console.log(streak)
-        console.log(lap)
     }
 
     function setUserTableData(rawStreak = [], rawLap = [], useLocal = false) {

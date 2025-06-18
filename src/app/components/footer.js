@@ -1,110 +1,134 @@
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import PortraitIcon from '@mui/icons-material/Portrait';
+import FacebookIcon from '@mui/icons-material/Facebook';
 import GitHubIcon from '@mui/icons-material/GitHub';
 
 export const Footer = () => {
 
     return (
-        <div className='main-header-ad-banner d-flex flex-row m-0'>
-            <div className="col-1 d-none d-lg-block ">
-                {/* GAP */}
-            </div>
+        <footer>
+            <div className='main-header-ad-banner d-flex flex-row m-0 pt-5'>
 
-            {/* CENTER */}
-            <div className="col main-header-ad-banner d-flex flex-column">
-                <div className="d-flex flex-fill justify-content-center pb-4">
-                    <img
-                        src="https://blog.sakura.co/wp-content/uploads/2022/10/sakuraco_momiji-thumbnail.png"
-                        alt="Ad Banner"
-                        className="img-fluid w-25 object-fit-cover"
-                    />
+                <div className="col-1 d-none d-md-block ">
+                    {/* GAP */}
                 </div>
-                <div className='border-top border-2 mx-4' />
-                <div className="d-flex flex-column flex-xl-row pb-4 pt-4">
-                    <div className="col main-footer-border border-2">
-                        <div className="d-flex flex-column">
-                            <div className="d-flex justify-content-center pt-xl-0 pb-3">
-                                {/* <p className="opacity-50 fs-5">Support the Project</p> */}
-                                <p className="opacity-75 fs-5">Buy me a <span className="text-decoration-line-through">coffee</span> <span className="fw-bold">ZX4RR</span></p>
-                            </div>
-                            {/* <div className="d-flex justify-content-center">
-                                <p className="opacity-50">Buy me a <span className="text-decoration-line-through">coffee</span> <span className="fw-bold">ZX4RR</span></p>
-                            </div> */}
-                            <div className="d-flex justify-content-around px-5">
-                                <div className="border border-2 rounded-3 p-2">
-                                    <img
-                                        src="/gcash.png"
-                                        alt="Ad Banner"
-                                        className="object-fit-cover"
-                                        style={{ maxWidth: '100px', maxHeight: '100px' }}
-                                    />
-                                </div>
-                                <div className="border border-2 rounded-3 p-2">
-                                    <img
-                                        src="/bdo.png"
-                                        alt="Ad Banner"
-                                        className="object-fit-cover"
-                                        style={{ maxWidth: '100px', maxHeight: '100px' }}
-                                    />
+
+                {/* CENTER */}
+                <div className="col main-header-ad-banner d-flex flex-column">
+                    <div className="d-flex flex-fill justify-content-center pb-4">
+                        <img
+                            src="https://blog.sakura.co/wp-content/uploads/2022/10/sakuraco_momiji-thumbnail.png"
+                            alt="Ad Banner"
+                            className="img-fluid object-fit-cover px-4"
+                            style={{ maxHeight: 300 }}
+                        />
+                    </div>
+
+                    {/* HORIZONTAL LINE */}
+                    <div className='border-top border-2 mx-4' />
+
+                    <div className="d-flex flex-column flex-sm-row pb-3 pt-4">
+
+                        {/* COLUMN 1 */}
+                        <div className="col main-footer-border pb-4">
+                            <div className='d-flex justify-content-center'>
+                                <div className='d-flex flex-column'>
+                                    <div className="d-flex pb-2">
+                                        <h6 className="opacity-75 fs-6 fw-bold">© {new Date().getFullYear()} Hirakana</h6>
+                                    </div>
+                                    <div className="d-flex">
+                                        <p className="opacity-50 mb-2">All rights reserved</p>
+                                    </div>
+                                    <div className="d-flex">
+                                        <p className="opacity-50 mb-2">Made with ❤️ in 🇯🇵</p>
+                                    </div>
+                                    <div className="d-flex justify-content-center">
+                                        <p className="opacity-50 m-0">About</p>
+                                    </div>
                                 </div>
                             </div>
-                            {/* <div className="d-flex justify-content-center justify-content-xl-start ps-0 ps-xl-5 mt-4">
-                                <img
-                                    src="/zx4rr.png"
-                                    alt="Ad Banner"
-                                    className="img-fluid w-50 object-fit-cover"
-                                />
-                            </div> */}
                         </div>
-                    </div>
-                    <div className="col main-footer-border">
-                        <div className="d-flex justify-content-center pt-5 pb-4 pt-xl-0">
-                            <p className="opacity-75 fs-5">© 2025 Hirakana</p>
-                        </div>
-                        <div className="d-flex justify-content-center">
-                            <p className="opacity-50">All rights reserved</p>
-                        </div>
-                        <div className="d-flex justify-content-center">
-                            <p className="opacity-50 m-0">Made with ❤️ in the Philippines</p>
-                        </div>
-                    </div>
-                    <div className="col">
-                        <div className="d-flex flex-column">
-                            <div className="d-flex justify-content-center pt-5 pt-xl-0 pb-4">
-                                <p className="opacity-75 fs-5">Contact / Hire Me!</p>
-                            </div>
-                            <div className="d-flex justify-content-center">
-                                <a href="mailto:stargaze.lt@gmail.com" className="text-black text-decoration-none d-flex">
-                                    <MailOutlineIcon className='me-2 opacity-50' />
-                                    <p className="opacity-50">
-                                        stargaze.lt@gmail.com
-                                    </p>
-                                </a>
-                            </div>
-                            <div className="d-flex justify-content-center">
-                                <a href="https://github.com/StarGaze870" target="_blank" className="text-black text-decoration-none d-flex">
-                                    <PictureAsPdfIcon className='me-2 opacity-50' />
-                                    <p className="opacity-50">
-                                        Resume
-                                    </p>
-                                </a>
-                            </div>
-                            <div className="d-flex justify-content-center">
-                                <a href="https://github.com/StarGaze870" target="_blank" className="text-black text-decoration-none d-flex">
-                                    <GitHubIcon className='me-2 opacity-50' />
-                                    <p className="opacity-50">
-                                        GitHub
-                                    </p>
-                                </a>
+
+                        {/* COLUMN 2 */}
+                        <div className="col main-footer-border pb-4">
+                            <div className='d-flex justify-content-center'>
+                                <div className="d-flex flex-column">
+                                    <div className="d-flex pb-2 ps-2">
+                                        <h6 className="opacity-75 fs-6 fw-bold">Resources</h6>
+                                    </div>
+                                    <div className="d-flex">
+                                        <a href="mailto:stargaze.lt@gmail.com" className="footer-links text-decoration-none d-flex">
+                                            <GitHubIcon className='me-2 opacity-50' />
+                                            <p className="opacity-50  mb-2">
+                                                GitHub
+                                            </p>
+                                        </a>
+                                    </div>
+                                    <div className="d-flex">
+                                        <a href="https://www.linkedin.com/in/ljtudtud/" target="_blank" className="footer-links text-decoration-none d-flex">
+                                            <PictureAsPdfIcon className='me-2 opacity-50' />
+                                            <p className="opacity-50 mb-2">
+                                                Resume
+                                            </p>
+                                        </a>
+                                    </div>
+                                    <div className="d-flex">
+                                        <a href="https://www.facebook.com/eljeee.me/" target="_blank" className="footer-links text-decoration-none d-flex">
+                                            <PortraitIcon className='me-2 opacity-50' />
+                                            <p className="opacity-50">
+                                                Portfolio
+                                            </p>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
+                        {/* COLUMN 3 */}
+                        <div className="col">
+                            <div className='d-flex justify-content-center'>
+                                <div className="d-flex flex-column">
+                                    <div className="d-flex pb-2 ps-3">
+                                        <h6 className="opacity-75 fs-6 fw-bold">Contacts</h6>
+                                    </div>
+                                    <div className="d-flex">
+                                        <a href="mailto:stargaze.lt@gmail.com" className="footer-links text-decoration-none d-flex">
+                                            <MailOutlineIcon className='me-2 opacity-50' />
+                                            <p className="opacity-50 mb-2">
+                                                Email
+                                            </p>
+                                        </a>
+                                    </div>
+                                    <div className="d-flex">
+                                        <a href="https://www.linkedin.com/in/ljtudtud/" target="_blank" className="footer-links text-decoration-none d-flex">
+                                            <LinkedInIcon className='me-2 opacity-50' />
+                                            <p className="opacity-50 mb-2">
+                                                LinkedIn
+                                            </p>
+                                        </a>
+                                    </div>
+                                    <div className="d-flex">
+                                        <a href="https://www.facebook.com/eljeee.me/" target="_blank" className="footer-links text-decoration-none d-flex">
+                                            <FacebookIcon className='me-2 opacity-50' />
+                                            <p className="opacity-50">
+                                                Facebook
+                                            </p>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-            </div>
 
-            <div className="col-1 d-none d-lg-block">
-                {/* GAP */}
+                <div className="col-1 d-none d-md-block">
+                    {/* GAP */}
+                </div>
+
             </div>
-        </div>
+        </footer>
     );
 }

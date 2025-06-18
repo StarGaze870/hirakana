@@ -65,3 +65,13 @@
 .sidebar-left-library-modal-snap-item {
   scroll-snap-align: start;
 }
+
+/* ---------------------------- FOOTER ---------------------------------------- */
+
+.footer-links {
+    color: black;
+}
+
+.footer-links:hover {
+    color: red;
+}

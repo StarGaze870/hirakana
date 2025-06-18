@@ -40,7 +40,7 @@ export const HistoryTable = ({
     return (
         <div className="d-flex flex-fill flex-column">
             {(visibleRows.length == 0) ?
-                <div className="d-flex flex-fill justify-content-center">
+                <div className="d-flex flex-fill justify-content-center" style={{ minHeight: 325.63 }}>
                     <div className="d-flex" style={{ maxWidth: 300 }}>
                         <img
                             src="nyan.png"

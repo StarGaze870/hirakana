@@ -1,12 +1,10 @@
 import Head from 'next/head';
-import { Footer } from "./components/footer";
 import { MainContent } from "./components/main";
-import Header from './components/header';
 
 export default function Home() {
 
   return (
-    <div className='d-flex flex-column' style={{ height: '100vh' }}>
+    <div>
 
       {/* SEO + Social Meta */}
       <Head>
@@ -34,11 +32,6 @@ export default function Home() {
 
       {/* MAIN CONTENT */}
       <MainContent />
-
-      {/* FOOTER */}
-      <footer>
-        <Footer />
-      </footer>
       
     </div>
   )

@@ -285,7 +285,12 @@ export default function Tutorial() {
         <h1 className="mt-5 fw-bold">Game Mechanics</h1>
         <h2 className="mt-5 fw-bold">Hirakana</h2>
         <p className="text-justify px-1 pt-2">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet facilisis urna. Praesent facilisis, orci at malesuada viverra, neque turpis ultricies justo, sit amet scelerisque eros nisl id justo. Curabitur lacinia, nisl eu pretium tincidunt, magna ipsum consectetur mauris, vel imperdiet justo nisl nec metus. Aenean ut sapien eget felis tristique lacinia. Nulla facilisi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Vivamus in neque nec elit malesuada sodales nec ac eros. Duis ac semper nunc. Phasellus non lacus fringilla, egestas ligula non, efficitur ipsum.
+          Welcome to Neko a fun and simple way to practice reading and typing Japanese letters.
+          This app helps you learn Hiragana, advanced Hiragana, and Kanji at your own pace.
+          Pick a level, type what you see, and try to get faster each time. You can see your top scores and try to beat them
+          Everything is clean and easy to follow. Whether you're just starting or already learning,
+          Neko makes practice fun and friendly.
+          Try it out and see how much you can learn today!
         </p>
 
         {/* 1. Selecting a difficulty */}
@@ -307,26 +312,35 @@ export default function Tutorial() {
         {/* DIFFICULTY DEFINITION */}
         <div className="d-flex flex-column flex-lg-row" style={{ minHeight: 180 }}>
           {/* EASY */}
-          <div className={`${difficultyDisplay == -1 || difficultyDisplay == 0 ? 'd-block' : 'd-none'}`}>
+          <div className={`col ${difficultyDisplay == -1 || difficultyDisplay == 0 ? 'd-block' : 'd-none'}`}>
             <h5 className="ps-1 pt-2 m-0 fw-bolder text-success">Easy</h5>
             <p className="text-justify px-1 pt-2">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet facilisis urna. Praesent facilisis, orci at malesuada viverra, neque turpis ultricies justo, sit amet scelerisque eros nisl id justo. Curabitur lacinia, nisl eu pretium tincidunt, magna ipsum.
+              In Easy mode, both the Library and Hint buttons are active.
+              You can press <kbd className="bg-light px-2 py-1 border rounded text-black fw-bold fs-6">1</kbd>
+              to open the Library or <kbd className="bg-light px-2 py-1 border rounded text-black fw-bold fs-6">2</kbd> for a hint.
+              This mode is perfect for beginners. It gives you full support so you can learn characters,
+              check answers, and build confidence while playing.
             </p>
           </div>
 
           {/* MEDIUM */}
-          <div className={`${difficultyDisplay == -1 || difficultyDisplay == 1 ? 'd-block' : 'd-none'}`}>
+          <div className={`col ${difficultyDisplay == -1 || difficultyDisplay == 1 ? 'd-block' : 'd-none'}`}>
             <h5 className="ps-1 pt-2 m-0 fw-bolder text-warning">Medium</h5>
             <p className="text-justify px-1 pt-2">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet facilisis urna. Praesent facilisis, orci at malesuada viverra, neque turpis ultricies justo, sit amet scelerisque eros nisl id justo. Curabitur lacinia, nisl eu pretium tincidunt, magna ipsum.
+              In Medium mode, only the Library button is available,
+              so you’ll need to rely more on memory.
+              This is a great next step if you’ve already practiced the basics and want a mild challenge.
             </p>
           </div>
 
           {/* HARD */}
-          <div className={`${difficultyDisplay == -1 || difficultyDisplay == 2 ? 'd-block' : 'd-none'}`}>
+          <div className={`col ${difficultyDisplay == -1 || difficultyDisplay == 2 ? 'd-block' : 'd-none'}`}>
             <h5 className="ps-1 pt-2 m-0 fw-bolder text-danger">Hard</h5>
             <p className="text-justify px-1 pt-2">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet facilisis urna. Praesent facilisis, orci at malesuada viverra, neque turpis ultricies justo, sit amet scelerisque eros nisl id justo. Curabitur lacinia, nisl eu pretium tincidunt, magna ipsum.
+              Hard mode disables both the Library <kbd className="bg-light px-2 py-1 border rounded text-black fw-bold fs-6">1</kbd>
+              and Hint <kbd className="bg-light px-2 py-1 border rounded text-black fw-bold fs-6">2</kbd> buttons.
+              You’ll need to answer without any help. This is the best option if you’re ready to test your skills,
+              speed, and accuracy using only what you’ve learned. No shortcuts, just memory.
             </p>
           </div>
         </div>
@@ -355,7 +369,11 @@ export default function Tutorial() {
             </div>
           </div>
           <p className="text-justify px-1 pt-4">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet facilisis urna. Praesent facilisis, orci at malesuada viverra, neque turpis ultricies justo, sit amet scelerisque eros nisl id justo. Curabitur lacinia, nisl eu pretium tincidunt, magna ipsum.
+            To add a new player, click the dropdown and select New Player from the list.
+            A modal window will appear where you can enter a name and confirm.
+            After adding the player, their name will appear in the dropdown list,
+            and you can start using it right away.
+            This makes it easy to switch between different users while playing or tracking progress.
           </p>
         </div>
 
@@ -368,7 +386,11 @@ export default function Tutorial() {
             </p>
           </div>
           <p className="text-justify px-1 pt-4">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet facilisis urna. Praesent facilisis, orci at malesuada viverra, neque turpis ultricies justo, sit amet scelerisque eros nisl id justo. Curabitur lacinia, nisl eu pretium tincidunt, magna ipsum.
+            This number shows how many characters you’ve answered so far.
+            It helps track your progress as you go through the list.
+            The total count is shown beside it, so you can see how close you are to finishing.
+            Each time you answer a character, the number updates.
+            Use this to stay motivated and aim for a full completion of all characters.
           </p>
         </div>
 
@@ -381,7 +403,10 @@ export default function Tutorial() {
             </span>
           </div>
           <p className="text-justify px-1 pt-2">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet facilisis urna. Praesent facilisis, orci at malesuada viverra, neque turpis ultricies justo, sit amet scelerisque eros nisl id justo. Curabitur lacinia, nisl eu pretium tincidunt, magna ipsum.
+            The character shown here is the one you need to type.
+            Look closely at its shape and try to recognize it before typing your answer.
+            Each time you get it right, a new one will appear.
+            This helps train your memory and recognition skills as you progress.
           </p>
         </div>
 
@@ -439,7 +464,11 @@ export default function Tutorial() {
             </div>
           </div>
           <p className="text-justify px-1">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet facilisis urna. Praesent facilisis, orci at malesuada viverra, neque turpis ultricies justo, sit amet scelerisque eros nisl id justo. Curabitur lacinia, nisl eu pretium tincidunt, magna ipsum.
+            Type your answer in the box shown above.
+            This is where you write the Romaji that matches the character on the screen.
+            After typing, press Enter to submit. If you get it right, the next character will load.
+            This helps you practice recall and typing speed in real time.
+            Use hints or the library if they’re available in your selected mode.
           </p>
         </div>
 
@@ -459,7 +488,11 @@ export default function Tutorial() {
             </p>
           </div>
           <p className="text-justify px-1 pt-3">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet facilisis urna. Praesent facilisis, orci at malesuada viverra, neque turpis ultricies justo, sit amet scelerisque eros nisl id justo. Curabitur lacinia, nisl eu pretium tincidunt, magna ipsum.
+            The Library helps you review all the characters in the current set.
+            You can open it anytime by clicking the icon or pressing
+            <kbd className="bg-light px-2 py-1 border rounded text-black fw-bold fs-6">1</kbd> on your keyboard.
+            This is useful for checking unfamiliar characters or double-checking answers while learning.
+            It's available in Easy and Medium modes.
           </p>
         </div>
 
@@ -479,7 +512,10 @@ export default function Tutorial() {
             </p>
           </div>
           <p className="text-justify px-1 pt-3">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet facilisis urna. Praesent facilisis, orci at malesuada viverra, neque turpis ultricies justo, sit amet scelerisque eros nisl id justo. Curabitur lacinia, nisl eu pretium tincidunt, magna ipsum.
+            The Hint tool gives you a clue for the current character.
+            Press <kbd className="bg-light px-2 py-1 border rounded text-black fw-bold fs-6">2</kbd>
+            or click the icon to see a small hint that helps you figure out the correct answer.
+            It’s a helpful tool when you're unsure, but it’s only available in Easy mode to support new learners.
           </p>
         </div>
 
@@ -503,12 +539,16 @@ export default function Tutorial() {
             </div>
           </div>
           <p className="text-justify px-1 pt-4">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet facilisis urna. Praesent facilisis, orci at malesuada viverra, neque turpis ultricies justo, sit amet scelerisque eros nisl id justo. Curabitur lacinia, nisl eu pretium tincidunt, magna ipsum.
+            The stopwatch starts automatically when you begin typing in the input box. 
+            It tracks how long you take to answer all the characters. 
+            If you switch to another tab or window, the timer pauses to keep things fair.
+            When you return to the app, it resumes right where you left off. 
+            This helps measure your real focus and typing speed during practice.
           </p>
         </div>
 
         {/* 9. History Tracker */}
-        <dv>
+        <div>
           <h4 className="pt-4">9. History Tracker</h4>
           <div className="px-2" style={{ maxWidth: 500 }}>
             <MainSidebarRight
@@ -524,9 +564,13 @@ export default function Tutorial() {
             />
           </div>
           <p className="text-justify px-1 pt-4">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet facilisis urna. Praesent facilisis, orci at malesuada viverra, neque turpis ultricies justo, sit amet scelerisque eros nisl id justo. Curabitur lacinia, nisl eu pretium tincidunt, magna ipsum.
+            This table shows all your previous answers in order. 
+            Each row displays whether your answer was correct, 
+            the Japanese character shown, and the Romaji you entered. 
+            Use this to review your mistakes and keep track of your progress. 
+            You can scroll through the list and click the refresh icon to clear your history and start fresh.
           </p>
-        </dv>
+        </div>
 
         {/* 10. Restart Game */}
         <div>
@@ -540,18 +584,22 @@ export default function Tutorial() {
               </span>
             </Tooltip>
             <p className="m-0 ps-3 text-muted">
-              Press <kbd className="bg-light px-2 py-1 border rounded text-black fw-bold fs-6">3</kbd> to use hint.
+              Press <kbd className="bg-light px-2 py-1 border rounded text-black fw-bold fs-6">3</kbd> to restart.
             </p>
           </div>
           <p className="text-justify px-1 pt-3">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet facilisis urna. Praesent facilisis, orci at malesuada viverra, neque turpis ultricies justo, sit amet scelerisque eros nisl id justo. Curabitur lacinia, nisl eu pretium tincidunt, magna ipsum.
+            Pressing <kbd className="bg-light px-2 py-1 border rounded text-black fw-bold fs-6">3</kbd>
+             or clicking the restart icon resets the game. 
+             This will clear your progress and timer so you can begin again from the first character. 
+             It’s useful if you want a clean practice run or switch players. 
+             Make sure to restart only when you're ready to start over.
           </p>
         </div>
 
         {/* 11. Records Table */}
-        <dv>
+        <div>
           <h4 className="pt-4">11. Records Table</h4>
-          <div className="px-2" style={{ maxWidth: 500 }}>
+          <div className="ps-4 pt-3" style={{ maxWidth: 500 }}>
             <HistoryTable
               tableHeaders={tableHeaders}
               tableData={tableData}
@@ -560,9 +608,13 @@ export default function Tutorial() {
             />
           </div>
           <p className="text-justify px-1 pt-4">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet facilisis urna. Praesent facilisis, orci at malesuada viverra, neque turpis ultricies justo, sit amet scelerisque eros nisl id justo. Curabitur lacinia, nisl eu pretium tincidunt, magna ipsum.
+            This table shows your best completion times for each session. 
+            It automatically saves your fastest records so you can track your improvement over time. 
+            Each entry includes the time and the date it was recorded. 
+            You can sort the table by time or date to compare runs more easily. 
+            You can also switch between Best Lap and Best Streaks to see different types of records based on your performance.
           </p>
-        </dv>
+        </div>
 
       </Container >
     </div >
@@ -594,7 +646,7 @@ const streakHistoryData = [
   { streak: 1, date: 'June 4, 11:17 AM' },
   { streak: 2, date: 'July 19, 12:30 AM' },
   { streak: 6, date: 'August 2, 6:31 PM' },
-  { streak: 4, date: 'Septemper 12, 7:40 PM' },
+  { streak: 4, date: 'September 12, 7:40 PM' },
 ];
 
 const lapHistoryData = [
@@ -602,5 +654,5 @@ const lapHistoryData = [
   { lap: '05:27:39', date: 'June 4, 11:17 AM' },
   { lap: '08:11:78', date: 'July 19, 12:30 AM' },
   { lap: '12:49:22', date: 'August 2, 6:31 PM' },
-  { lap: '23:43:34', date: 'Septemper 12, 7:40 PM' },
+  { lap: '23:43:34', date: 'September 12, 7:40 PM' },
 ];
