@@ -328,8 +328,8 @@ export default function Tutorial() {
             <h5 className="ps-1 pt-2 m-0 fw-bolder text-warning">Medium</h5>
             <p className="text-justify px-1 pt-2">
               In Medium mode, only the Library button is available,
-              so you’ll need to rely more on memory.
-              This is a great next step if you’ve already practiced the basics and want a mild challenge.
+              so you&apos;ll need to rely more on memory.
+              This is a great next step if you&apos;ve already practiced the basics and want a mild challenge.
             </p>
           </div>
 
@@ -339,8 +339,8 @@ export default function Tutorial() {
             <p className="text-justify px-1 pt-2">
               Hard mode disables both the Library <kbd className="bg-light px-2 py-1 border rounded text-black fw-bold fs-6">1</kbd>
               and Hint <kbd className="bg-light px-2 py-1 border rounded text-black fw-bold fs-6">2</kbd> buttons.
-              You’ll need to answer without any help. This is the best option if you’re ready to test your skills,
-              speed, and accuracy using only what you’ve learned. No shortcuts, just memory.
+              You&apos;ll need to answer without any help. This is the best option if you&apos;re ready to test your skills,
+              speed, and accuracy using only what you&apos;ve learned. No shortcuts, just memory.
             </p>
           </div>
         </div>
@@ -386,7 +386,7 @@ export default function Tutorial() {
             </p>
           </div>
           <p className="text-justify px-1 pt-4">
-            This number shows how many characters you’ve answered so far.
+            This number shows how many characters you&apos;ve answered so far.
             It helps track your progress as you go through the list.
             The total count is shown beside it, so you can see how close you are to finishing.
             Each time you answer a character, the number updates.
@@ -468,7 +468,7 @@ export default function Tutorial() {
             This is where you write the Romaji that matches the character on the screen.
             After typing, press Enter to submit. If you get it right, the next character will load.
             This helps you practice recall and typing speed in real time.
-            Use hints or the library if they’re available in your selected mode.
+            Use hints or the library if they&apos;re available in your selected mode.
           </p>
         </div>
 
@@ -515,7 +515,7 @@ export default function Tutorial() {
             The Hint tool gives you a clue for the current character.
             Press <kbd className="bg-light px-2 py-1 border rounded text-black fw-bold fs-6">2</kbd>
             or click the icon to see a small hint that helps you figure out the correct answer.
-            It’s a helpful tool when you're unsure, but it’s only available in Easy mode to support new learners.
+            It&apos;s a helpful tool when you're unsure, but it&apos;s only available in Easy mode to support new learners.
           </p>
         </div>
 
@@ -591,7 +591,7 @@ export default function Tutorial() {
             Pressing <kbd className="bg-light px-2 py-1 border rounded text-black fw-bold fs-6">3</kbd>
              or clicking the restart icon resets the game. 
              This will clear your progress and timer so you can begin again from the first character. 
-             It’s useful if you want a clean practice run or switch players. 
+             It&apos;s useful if you want a clean practice run or switch players. 
              Make sure to restart only when you're ready to start over.
           </p>
         </div>
