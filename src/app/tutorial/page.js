@@ -288,7 +288,7 @@ export default function Tutorial() {
           Welcome to Neko a fun and simple way to practice reading and typing Japanese letters.
           This app helps you learn Hiragana, advanced Hiragana, and Kanji at your own pace.
           Pick a level, type what you see, and try to get faster each time. You can see your top scores and try to beat them
-          Everything is clean and easy to follow. Whether you're just starting or already learning,
+          Everything is clean and easy to follow. Whether you&apos;re just starting or already learning,
           Neko makes practice fun and friendly.
           Try it out and see how much you can learn today!
         </p>
@@ -492,7 +492,7 @@ export default function Tutorial() {
             You can open it anytime by clicking the icon or pressing
             <kbd className="bg-light px-2 py-1 border rounded text-black fw-bold fs-6">1</kbd> on your keyboard.
             This is useful for checking unfamiliar characters or double-checking answers while learning.
-            It's available in Easy and Medium modes.
+            It&apos;s available in Easy and Medium modes.
           </p>
         </div>
 
@@ -515,7 +515,7 @@ export default function Tutorial() {
             The Hint tool gives you a clue for the current character.
             Press <kbd className="bg-light px-2 py-1 border rounded text-black fw-bold fs-6">2</kbd>
             or click the icon to see a small hint that helps you figure out the correct answer.
-            It&apos;s a helpful tool when you're unsure, but it&apos;s only available in Easy mode to support new learners.
+            It&apos;s a helpful tool when you&apos;re unsure, but it&apos;s only available in Easy mode to support new learners.
           </p>
         </div>
 
@@ -592,7 +592,7 @@ export default function Tutorial() {
              or clicking the restart icon resets the game. 
              This will clear your progress and timer so you can begin again from the first character. 
              It&apos;s useful if you want a clean practice run or switch players. 
-             Make sure to restart only when you're ready to start over.
+             Make sure to restart only when you&apos;re ready to start over.
           </p>
         </div>
 
