@@ -57,7 +57,7 @@ export const getUsersData = () => {
     return Object.entries(data.hirakana['users'])
         .map(([username, value]) => ({
             ...value,
-            username: decryptName(username),
+            username: DECRYPT_NAME(username),
         }))
         .sort((a, b) => a.username.localeCompare(b.username));
 }
@@ -86,7 +86,7 @@ export const setCurrentUserSelected = (name) => {
 
 export const getCurrentUser = () => {
     const data = getRawData();
-    return decryptName(data.hirakana.selectedUser) || null;
+    return DECRYPT_NAME(data.hirakana.selectedUser) || null;
 }
 
 export const saveStreakAndLap = (time, streakCount) => {
@@ -98,9 +98,8 @@ export const saveStreakAndLap = (time, streakCount) => {
     storeData(data);
 }
 
-export const getStreakAndLap = () => {
+export const getCurrentUserStreakAndLap = () => {
     let data = getRawData();
-
     const currentUser = data.hirakana.selectedUser;
     if (!currentUser || !data.hirakana || !data.hirakana.users || !data.hirakana.users[currentUser]) {
         return { streak: [], lap: [] };
@@ -110,6 +109,15 @@ export const getStreakAndLap = () => {
     const lap = data.hirakana.users[currentUser].lap || [];
 
     return { streak, lap }
+}
+
+export const getStreakAndLap = () => {
+    let data = getRawData();
+    if (!data.hirakana || !data.hirakana.users) {
+        return { streak: [], lap: [] };
+    }
+
+    return data.hirakana.users
 }
 
 const getRawData = () => {
@@ -154,7 +162,7 @@ const encryptName = (name) => {
     return name?.trim().replace(/ /g, '_');
 }
 
-const decryptName = (name) => {
+export const DECRYPT_NAME = (name) => {
     return name?.replace(/_/g, ' ');
 }
 

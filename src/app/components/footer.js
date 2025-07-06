@@ -45,7 +45,9 @@ export const Footer = () => {
                                         <p className="opacity-50 mb-2">Made with ❤️ in 🇯🇵</p>
                                     </div>
                                     <div className="d-flex justify-content-center">
-                                        <p className="opacity-50 m-0">About</p>
+                                        <a href="/about" className="footer-links text-decoration-none d-flex">
+                                            <p className="opacity-50 m-0">About</p>
+                                        </a>
                                     </div>
                                 </div>
                             </div>

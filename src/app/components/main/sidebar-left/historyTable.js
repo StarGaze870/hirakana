@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { visuallyHidden } from '@mui/utils';
-import { Box, IconButton, Skeleton, TableSortLabel, Tooltip } from "@mui/material";
+import { Box, IconButton, TableSortLabel, Tooltip } from "@mui/material";
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -12,17 +12,21 @@ import { getComparator } from "../mainFunctions";
 
 export const HistoryTable = ({
     tableHeaders = [],
+    tableColumns = [],
     tableData = [],
     height = 300,
+    showSwitchTables = true,
+    defaultSortByColumn = "",
     handleOnSwitchTables = () => console.error("handleOnSwitchTables is not set"),
 
 }) => {
 
-    const [orderBy, setOrderBy] = useState('date');
+    const [orderBy, setOrderBy] = useState(defaultSortByColumn);
     const [order, setOrder] = useState('asc');
 
     const createSortHandler = (property) => (event) => {
-        handleRequestSort(event, property);
+        const propertyIntVersion = `${property}_int`;
+        handleRequestSort(event, propertyIntVersion);
     };
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -50,7 +54,7 @@ export const HistoryTable = ({
                     </div>
                 </div>
                 : <>
-                    <div className="ps-2">
+                    <div className={`ps-2 ${!showSwitchTables ? 'd-none' : 'd-block'}`}>
                         <Tooltip className="p-0" title='Library' placement='auto'>
                             <IconButton onClick={handleOnSwitchTables}>
                                 <SwapHorizIcon />
@@ -62,19 +66,19 @@ export const HistoryTable = ({
                             <Table stickyHeader aria-label="sticky table" size="medium">
                                 <TableHead>
                                     <TableRow>
+                                        <TableCell width={10} padding="none"></TableCell>
                                         {tableHeaders.map((headCell) => (
                                             <TableCell
                                                 key={headCell.id}
                                                 align={'left'}
-                                                padding={'none'}
                                                 sortDirection={orderBy === headCell.id ? order : false}
                                                 style={{ minWidth: headCell.minWidth, maxWidth: headCell.minWidth, backgroundColor: '', textAlign: '', color: 'black', fontWeight: headCell.fw }}
                                                 onClick={createSortHandler(headCell.id)}
                                                 sx={{ cursor: 'pointer' }}
                                             >
                                                 <TableSortLabel
-                                                    active={orderBy === headCell.id}
-                                                    direction={orderBy === headCell.id ? order : 'asc'}
+                                                    active={orderBy.replace(/_int$/, '') === headCell.id}
+                                                    direction={orderBy.replace(/_int$/, '') === headCell.id ? order : 'asc'}
                                                 >
                                                     {headCell.label}
                                                     {orderBy === headCell.id ? (
@@ -96,12 +100,12 @@ export const HistoryTable = ({
                                                 key={index}
                                                 sx={{ userSelect: 'none' }}
                                             >
-                                                <TableCell align='left' sx={{ maxWidth: '10px' }}>
-                                                    {row.streak ?? row.lap}
-                                                </TableCell>
-                                                <TableCell align='left' sx={{ maxWidth: '10px' }}>
-                                                    {row.date}
-                                                </TableCell>
+                                                <TableCell padding="none">{index + 1}</TableCell>
+                                                {tableColumns.map((column, index) => (
+                                                    <TableCell key={index} align='left' sx={{ maxWidth: '10px' }}>
+                                                        {row[column]}
+                                                    </TableCell>
+                                                ))}
                                             </TableRow>)
                                     })}
                                 </TableBody>

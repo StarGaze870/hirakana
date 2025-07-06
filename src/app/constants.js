@@ -26,3 +26,37 @@ export const SIDE_BAR_LEFT_LAP_HEADERS = [
     { id: 'lap', label: 'Best Records', minWidth: 5, fw: 'bold' },
     { id: 'date', label: 'Date', minWidth: 10 },
 ];
+
+export const STREAK_COLUMNS = [
+    "streak",
+    "date",
+]
+
+export const LAP_COLUMNS = [
+    "lap",
+    "date",
+]
+
+export const LEADERBOARDS_LAP_HEADERS = [
+    { id: 'user', label: 'Player', minWidth: 5, fw: 'bold' },
+    { id: 'time', label: 'Time', minWidth: 5, fw: 'bold' },
+    { id: 'date', label: 'Date', minWidth: 10, fw: 'bold' },
+]
+
+export const LEADERBOARDS_STREAK_HEADERS = [
+    { id: 'user', label: 'Player', minWidth: 5, fw: 'bold' },
+    { id: 'streak', label: 'Streaks', minWidth: 5, fw: 'bold' },
+    { id: 'date', label: 'Date', minWidth: 10, fw: 'bold' },
+]
+
+export const LEADERBOARDS_LAP_COLUMNS = [
+    "user",
+    "time",
+    "date",
+]
+
+export const LEADERBOARDS_STREAK_COLUMNS = [
+    "user",
+    "streak",
+    "date",
+]

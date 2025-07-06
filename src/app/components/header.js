@@ -14,6 +14,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const pages = [
     { label: 'Home', link: '/' },
@@ -40,20 +41,12 @@ function Header() {
     };
 
     const handleCloseNavMenu = (e) => {
-        proceedToLink(e);
+        setAnchorElNav(null);
     };
 
     const handleCloseUserMenu = (e) => {
-        proceedToLink(e);
-    };
-
-    const proceedToLink = (link) => {
-        if (link[0] == '/') {
-            router.push(link)
-        }
-        setAnchorElNav(null);
         setAnchorElUser(null);
-    }
+    };
 
     return (
         <AppBar position="fixed" color='error'>
@@ -112,9 +105,11 @@ function Header() {
                             sx={{ display: { xs: 'block', md: 'none' } }}
                         >
                             {pages.map((page) => (
-                                <MenuItem key={page.link} onClick={() => handleCloseNavMenu(page.link)}>
-                                    <Typography sx={{ textAlign: 'center' }}>{page.label}</Typography>
-                                </MenuItem>
+                                <Link className='text-decoration-none text-black' href={page.link} key={page.link} passHref>
+                                    <MenuItem href={page.link} key={page.link} >
+                                        <Typography sx={{ textAlign: 'center' }}>{page.label}</Typography>
+                                    </MenuItem>
+                                </Link>
                             ))}
                         </Menu>
                     </Box>
@@ -148,7 +143,7 @@ function Header() {
                         {pages.map((page) => (
                             <Button
                                 key={page.link}
-                                onClick={() => handleCloseNavMenu(page.link)}
+                                href={page.link}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                             >
                                 {page.label}
@@ -181,7 +176,7 @@ function Header() {
                             onClose={handleCloseUserMenu}
                         >
                             {settings.map((setting) => (
-                                <MenuItem key={setting.link} onClick={() => handleCloseUserMenu(setting.link)}>
+                                <MenuItem href={setting.link} key={setting.link}>
                                     <Typography sx={{ textAlign: 'center' }}>{setting.label}</Typography>
                                 </MenuItem>
                             ))}

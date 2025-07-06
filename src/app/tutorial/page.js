@@ -1,18 +1,18 @@
 'use client'
 
+import { ADD_NEW_PLAYER, DIFFICULTY_EASY, DIFFICULTY_HARD, HIRAKANA_ARRAY, LAP_COLUMNS, SIDE_BAR_LEFT_LAP_HEADERS, SIDE_BAR_LEFT_LAP_TABLE, SIDE_BAR_LEFT_STREAK_HEADERS, SIDE_BAR_LEFT_STREAK_TABLE, STREAK_COLUMNS } from "../constants";
 import { Autocomplete, Avatar, Container, IconButton, MenuItem, Select, TextField, Tooltip } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
-import { ADD_NEW_PLAYER, DIFFICULTY_EASY, DIFFICULTY_HARD, HIRAKANA_ARRAY, SIDE_BAR_LEFT_LAP_HEADERS, SIDE_BAR_LEFT_LAP_TABLE, SIDE_BAR_LEFT_STREAK_HEADERS, SIDE_BAR_LEFT_STREAK_TABLE } from "../constants";
 import { CREATE_HISTORY_TABLE_DATA, stringAvatar } from "../components/main/mainFunctions";
-import AddnewPlayerModal from "../components/modal/AddNewPlayerModal";
-import LibraryModal from "../components/modal/LibraryModal";
-import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
-import Stopwatch from "../components/main/sidebar-left/stopwatch-left";
-import ReplayIcon from '@mui/icons-material/Replay';
 import { MainSidebarRight } from "../components/main/sidebar-right/sidebar-right";
-import YesNoModal from "../components/modal/YesNoModal";
 import { HistoryTable } from "../components/main/sidebar-left/historyTable";
+import { useEffect, useRef, useState } from "react";
+import Stopwatch from "../components/main/sidebar-left/stopwatch-left";
+import AddnewPlayerModal from "../components/modal/AddNewPlayerModal";
+import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
+import LibraryModal from "../components/modal/LibraryModal";
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import YesNoModal from "../components/modal/YesNoModal";
+import ReplayIcon from '@mui/icons-material/Replay';
 
 export default function Tutorial() {
 
@@ -46,6 +46,7 @@ export default function Tutorial() {
   const [tableData, setTableData] = useState([]);
   const [selectedTable, setSelectedTable] = useState(SIDE_BAR_LEFT_LAP_TABLE);
   const [tableHeaders, setTableHeaders] = useState(SIDE_BAR_LEFT_LAP_HEADERS);
+  const [tableColumns, setTableColumns] = useState(LAP_COLUMNS);
 
   const hintOpacity = isHintClicked
     || difficulty != DIFFICULTY_EASY
@@ -135,10 +136,12 @@ export default function Tutorial() {
     if (selectedTable == SIDE_BAR_LEFT_LAP_TABLE) {
       setTableData(lapHistoryData);
       setTableHeaders(SIDE_BAR_LEFT_LAP_HEADERS);
+      setTableColumns(LAP_COLUMNS);
     }
     else if (selectedTable == SIDE_BAR_LEFT_STREAK_TABLE) {
       setTableData(streakHistoryData);
       setTableHeaders(SIDE_BAR_LEFT_STREAK_HEADERS);
+      setTableColumns(STREAK_COLUMNS);
     }
   }
 
@@ -539,10 +542,10 @@ export default function Tutorial() {
             </div>
           </div>
           <p className="text-justify px-1 pt-4">
-            The stopwatch starts automatically when you begin typing in the input box. 
-            It tracks how long you take to answer all the characters. 
+            The stopwatch starts automatically when you begin typing in the input box.
+            It tracks how long you take to answer all the characters.
             If you switch to another tab or window, the timer pauses to keep things fair.
-            When you return to the app, it resumes right where you left off. 
+            When you return to the app, it resumes right where you left off.
             This helps measure your real focus and typing speed during practice.
           </p>
         </div>
@@ -564,10 +567,10 @@ export default function Tutorial() {
             />
           </div>
           <p className="text-justify px-1 pt-4">
-            This table shows all your previous answers in order. 
-            Each row displays whether your answer was correct, 
-            the Japanese character shown, and the Romaji you entered. 
-            Use this to review your mistakes and keep track of your progress. 
+            This table shows all your previous answers in order.
+            Each row displays whether your answer was correct,
+            the Japanese character shown, and the Romaji you entered.
+            Use this to review your mistakes and keep track of your progress.
             You can scroll through the list and click the refresh icon to clear your history and start fresh.
           </p>
         </div>
@@ -589,10 +592,10 @@ export default function Tutorial() {
           </div>
           <p className="text-justify px-1 pt-3">
             Pressing <kbd className="bg-light px-2 py-1 border rounded text-black fw-bold fs-6">3</kbd>
-             or clicking the restart icon resets the game. 
-             This will clear your progress and timer so you can begin again from the first character. 
-             It&apos;s useful if you want a clean practice run or switch players. 
-             Make sure to restart only when you&apos;re ready to start over.
+            or clicking the restart icon resets the game.
+            This will clear your progress and timer so you can begin again from the first character.
+            It&apos;s useful if you want a clean practice run or switch players.
+            Make sure to restart only when you&apos;re ready to start over.
           </p>
         </div>
 
@@ -602,16 +605,18 @@ export default function Tutorial() {
           <div className="ps-4 pt-3" style={{ maxWidth: 500 }}>
             <HistoryTable
               tableHeaders={tableHeaders}
+              tableColumns={tableColumns}
               tableData={tableData}
               height={260}
+              defaultSortByColumn="lap"
               handleOnSwitchTables={handleOnSwitchTables}
             />
           </div>
           <p className="text-justify px-1 pt-4">
-            This table shows your best completion times for each session. 
-            It automatically saves your fastest records so you can track your improvement over time. 
-            Each entry includes the time and the date it was recorded. 
-            You can sort the table by time or date to compare runs more easily. 
+            This table shows your best completion times for each session.
+            It automatically saves your fastest records so you can track your improvement over time.
+            Each entry includes the time and the date it was recorded.
+            You can sort the table by time or date to compare runs more easily.
             You can also switch between Best Lap and Best Streaks to see different types of records based on your performance.
           </p>
         </div>
@@ -642,17 +647,17 @@ const historyTableData = [
 ];
 
 const streakHistoryData = [
-  { streak: 9, date: 'March 20, 8:26 PM' },
-  { streak: 1, date: 'June 4, 11:17 AM' },
-  { streak: 2, date: 'July 19, 12:30 AM' },
-  { streak: 6, date: 'August 2, 6:31 PM' },
-  { streak: 4, date: 'September 12, 7:40 PM' },
+  { streak: 9, date: 'March 20, 8:26 PM', date_int: 1, streak_int: 9 },
+  { streak: 1, date: 'June 4, 11:17 AM', date_int: 2, streak_int: 1 },
+  { streak: 2, date: 'July 19, 12:30 AM', date_int: 3, streak_int: 2 },
+  { streak: 6, date: 'August 2, 6:31 PM', date_int: 4, streak_int: 6 },
+  { streak: 4, date: 'September 12, 7:40 PM', date_int: 5, streak_int: 4 },
 ];
 
 const lapHistoryData = [
-  { lap: '03:03:61', date: 'March 20, 8:26 PM' },
-  { lap: '05:27:39', date: 'June 4, 11:17 AM' },
-  { lap: '08:11:78', date: 'July 19, 12:30 AM' },
-  { lap: '12:49:22', date: 'August 2, 6:31 PM' },
-  { lap: '23:43:34', date: 'September 12, 7:40 PM' },
+  { lap: '12:49:22', date: 'March 20, 8:26 PM', date_int: 1, lap_int: 4 },
+  { lap: '23:43:34', date: 'June 4, 11:17 AM', date_int: 2, lap_int: 5 },
+  { lap: '08:11:78', date: 'July 19, 12:30 AM', date_int: 3, lap_int: 3 },
+  { lap: '03:03:61', date: 'August 2, 6:31 PM', date_int: 4, lap_int: 1 },
+  { lap: '05:27:39', date: 'September 12, 7:40 PM', date_int: 5, lap_int: 2 },
 ];

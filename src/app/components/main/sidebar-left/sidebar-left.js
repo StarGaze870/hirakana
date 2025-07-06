@@ -3,8 +3,8 @@ import TextField from '@mui/material/TextField';
 import Stopwatch from "./stopwatch-left";
 import AddnewPlayerModal from "../../modal/AddNewPlayerModal";
 import { useEffect, useState } from "react";
-import { DateNow_MMDDmmms, formatTime, getCurrentUser, getStreakAndLap, getUsersData, insertNewUserName, setCurrentUserSelected, stringAvatar } from "../mainFunctions";
-import { SIDE_BAR_LEFT_LAP_TABLE as LAP_TABLE, SIDE_BAR_LEFT_LAP_HEADERS, SIDE_BAR_LEFT_STREAK_HEADERS } from "@/app/constants";
+import { DateNow_MMDDmmms, formatTime, getCurrentUser, getCurrentUserStreakAndLap, getUsersData, insertNewUserName, setCurrentUserSelected, stringAvatar } from "../mainFunctions";
+import { LAP_COLUMNS, SIDE_BAR_LEFT_LAP_TABLE as LAP_TABLE, SIDE_BAR_LEFT_LAP_HEADERS, SIDE_BAR_LEFT_STREAK_HEADERS, STREAK_COLUMNS } from "@/app/constants";
 import { SIDE_BAR_LEFT_STREAK_TABLE as STREAK_TABLE } from "@/app/constants";
 import { ADD_NEW_PLAYER } from "@/app/constants";
 import { HistoryTable } from "./historyTable";
@@ -30,6 +30,7 @@ export const MainSidebarLeft = ({
 
     const [selectedTable, setSelectedTable] = useState(LAP_TABLE);
     const [tableHeaders, setTableHeaders] = useState(SIDE_BAR_LEFT_LAP_HEADERS);
+    const [tableColumns, setTableColumns] = useState(LAP_COLUMNS);
 
     useEffect(() => {
         setupUserData();
@@ -44,10 +45,21 @@ export const MainSidebarLeft = ({
     }, [stopwatchElapsedTimeRef.current]);
 
     function loadUsersData() {
-        let { streak, lap } = getStreakAndLap();
+        let { streak, lap } = getCurrentUserStreakAndLap();
 
-        streak = streak.map(e => ({ streak: e.c, date: DateNow_MMDDmmms(e.d) }));
-        lap = lap.map(e => ({ lap: formatTime(e.t), date: DateNow_MMDDmmms(e.d) }));
+        streak = streak.map(e => ({
+            streak: e.c,
+            date: DateNow_MMDDmmms(e.d),
+            date_int: e.d,
+            streak_int: parseInt(e.c)
+        }));
+
+        lap = lap.map(e => ({
+            lap: formatTime(e.t),
+            date: DateNow_MMDDmmms(e.d),
+            date_int: e.d,
+            lap_int: e.t,
+        }));
 
         setUserTableData(streak, lap, true);
         setStreakData(streak);
@@ -58,10 +70,12 @@ export const MainSidebarLeft = ({
         if (selectedTable == LAP_TABLE) {
             setTableData(useLocal ? rawLap : lapData);
             setTableHeaders(SIDE_BAR_LEFT_LAP_HEADERS);
+            setTableColumns(LAP_COLUMNS);
         }
         else if (selectedTable == STREAK_TABLE) {
             setTableData(useLocal ? rawStreak : streakData);
             setTableHeaders(SIDE_BAR_LEFT_STREAK_HEADERS);
+            setTableColumns(STREAK_COLUMNS);
         }
     }
 
@@ -172,7 +186,9 @@ export const MainSidebarLeft = ({
             {/* STREAK TABLE */}
             <HistoryTable
                 tableHeaders={tableHeaders}
+                tableColumns={tableColumns}
                 tableData={tableData}
+                defaultSortByColumn="lap"
                 handleOnSwitchTables={handleOnSwitchTables}
             />
 
