@@ -227,7 +227,7 @@ export const MainContent = () => {
 
     return (
         <div className="d-flex app-bar-margin flex-grow-1">
-            <div className='d-flex flex-row w-100'>
+            <div className='d-flex flex-row w-100' style={{ minHeight: 500 }}>
 
                 {/* LEFT SIDEBAR */}
                 <div className="col-1 d-none d-lg-block">
